@@ -25,10 +25,10 @@ export default function MarketsPage() {
 
       <div className={"market-container grid grid-cols-1 gap-6"}>
         {
-          markets.map(({ id, name}) => (
-            <Card key={id}
-                  buttonText={getTitle(name)}
-                  market={name}
+          markets.map((market) => (
+            <Card key={market.id}
+                  buttonText={getTitle(market.name)}
+                  market={market}
             />
           ))
         }
