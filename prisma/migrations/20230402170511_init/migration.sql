@@ -1,11 +1,5 @@
--- CreateTable
-CREATE TABLE "Example" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Example_pkey" PRIMARY KEY ("id")
-);
+-- CreateEnum
+CREATE TYPE "Market" AS ENUM ('FOREX', 'STOCKS', 'COMMODITIES', 'CRYPTO');
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -54,11 +48,11 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateTable
-CREATE TABLE "Market" (
+CREATE TABLE "Markets" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" "Market" NOT NULL,
 
-    CONSTRAINT "Market_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Markets_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

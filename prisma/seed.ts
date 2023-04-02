@@ -1,11 +1,14 @@
 import { db } from "../lib/db";
+import { Market } from "@prisma/client";
+import { createId } from "@paralleldrive/cuid2";
 
 async function main() {
-  const markets = ["forex", "commodities", "crypto", "stocks"];
+  const markets = [Market.CRYPTO, Market.FOREX, Market.STOCKS, Market.COMMODITIES];
 
   for (const market of markets) {
-    await db.market.create({
+    await db.markets.create({
       data: {
+        id: createId(),
         name: market,
       },
     });

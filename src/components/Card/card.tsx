@@ -1,19 +1,36 @@
+import Image from "next/image";
+import { Market, type Market as MarketType } from "@prisma/client";
+
 type Props = {
-  title: string;
-  text: string;
+  market: MarketType;
   buttonText: string;
 };
 
-export function Card({ title, text, buttonText }: Props) {
+export function Card({ market, buttonText }: Props) {
+  function getImage(market: string) {
+    if (market === Market.COMMODITIES) {
+      return "oil.svg";
+    } else if (market === Market.CRYPTO) {
+      return "bitcoin.svg";
+    } else if (market === Market.FOREX) {
+      return "forex.svg";
+    }
+
+    return "stock.svg";
+  }
+
   return (
     <div
-      className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      className="flex flex-col items-center max-w-sm p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
       <a href="#">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white capitalize">{title}</h5>
+        <h5 className="mb-2 text-3xl font-bold tracking-tight text-white capitalize text-center">{market}</h5>
       </a>
-      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{text}</p>
+      <div className={"mt-4 mb-8 h-[70px] w-[70px] relative"}>
+        <Image src={`/images/${getImage(market)}`} alt={"Image"} fill />
+      </div>
       <a href="#"
-         className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+         className={`block w-full items-center px-3 py-2 text-sm
+         font-medium text-center text-white rounded-lg focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800`}>
         {buttonText}
       </a>
     </div>
