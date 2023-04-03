@@ -35,7 +35,7 @@ export function CardWrapper({ market, buttonText }: Props) {
       <Button
         variant={"outline"}
         component={Link}
-        href={`assets/${market.id}`}
+        href={`/assets/${market.id}`}
         fullWidth
       >{buttonText}</Button>
     </Card>
