@@ -1,5 +1,5 @@
 import { Market } from "@prisma/client";
-import { Card } from "~/components/Card/card";
+import { CardWrapper } from "~/components/CardWrapper/CardWrapper";
 import { api } from "~/utils/api";
 
 export default function MarketsPage() {
@@ -21,14 +21,14 @@ export default function MarketsPage() {
 
   return (
     <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
-      <h1 className={"text-5xl font-bold text-black"}>Choose your favorite market</h1>
+      <h1 className={"text-5xl font-bold text-white"}>Choose your favorite market</h1>
 
       <div className={"market-container grid grid-cols-1 gap-6"}>
         {
           markets.map((market) => (
-            <Card key={market.id}
-                  buttonText={getTitle(market.name)}
-                  market={market}
+            <CardWrapper key={market.id}
+                         buttonText={getTitle(market.name)}
+                         market={market}
             />
           ))
         }
