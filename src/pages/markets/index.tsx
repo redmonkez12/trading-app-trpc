@@ -1,9 +1,10 @@
 import { Market } from "@prisma/client";
 import { CardWrapper } from "~/components/CardWrapper/CardWrapper";
 import { api } from "~/utils/api";
+import { Loader } from "@mantine/core";
 
 export default function MarketsPage() {
-  const { data: markets = [] } = api.markets.getAll.useQuery();
+  const { data: markets = [], isLoading = [] } = api.markets.getAll.useQuery();
 
   function getTitle(market: Market) {
     if (market === Market.COMMODITIES) {
@@ -19,9 +20,15 @@ export default function MarketsPage() {
     return "Unknown text";
   }
 
+  if (isLoading) {
+    return <div className={"loader"}>
+      <Loader size="md" />
+    </div>;
+  }
+
   return (
     <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
-      <h1 className={"text-5xl font-bold text-white"}>Choose your favorite market</h1>
+      <h1 className={"text-4xl md:text-5xl font-bold text-white text-center"}>Choose your favorite market</h1>
 
       <div className={"market-container grid grid-cols-1 gap-6"}>
         {

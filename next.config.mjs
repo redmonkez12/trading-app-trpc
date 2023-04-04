@@ -7,6 +7,15 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/markets",
+        permanent: true
+      }
+    ];
+  },
 
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
@@ -16,7 +25,7 @@ const config = {
    */
   i18n: {
     locales: ["en"],
-    defaultLocale: "en",
-  },
+    defaultLocale: "en"
+  }
 };
 export default config;

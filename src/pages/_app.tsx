@@ -17,6 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       withNormalizeCSS
       theme={{
         colorScheme: "dark",
+        loader: "bars",
       }}
     >
       <SessionProvider session={session}>
