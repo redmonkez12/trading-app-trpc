@@ -1,4 +1,4 @@
-import { db } from "~/lib/db";
+import { db } from "../lib/db";
 import { Market } from "@prisma/client";
 import { createId } from "@paralleldrive/cuid2";
 

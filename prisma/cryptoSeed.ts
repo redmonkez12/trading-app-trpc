@@ -1,20 +1,20 @@
-import { db } from "../lib/db";
 import { Market } from "@prisma/client";
 import { createId } from "@paralleldrive/cuid2";
+import { db } from "../lib/db";
 
-export async function commoditiesSeed() {
-  const forex = await db.markets.findFirstOrThrow({
+export async function cryptoSeed() {
+  const crypto = await db.markets.findFirstOrThrow({
     where: {
-      name: Market.COMMODITIES,
+      name: Market.CRYPTO,
     },
   });
 
   const assets = [
     {
-      name: "Gold Spot / U.S. Dollar",
-      ticker: "XAU/USD",
-      image: "gold",
-      marketId: forex.id,
+      name: "Bitcoin / TetherUS",
+      ticker: "BTC/USDT",
+      image: "bitcoin-usdt",
+      marketId: crypto.id,
     },
   ];
 
