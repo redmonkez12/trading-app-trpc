@@ -44,7 +44,7 @@ export default function Assets() {
                   <div
                     className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[60px] w-[60px] relative`}
                     style={{ backgroundColor: imageColors.backgroundColor }}>
-                    {(marketName === Market.FOREX || marketName === Market.STOCKS) ? (
+                    {(marketName === Market.COMMODITIES || marketName === Market.STOCKS) ? (
                       <Image className={`${marketName !== Market.STOCKS ? "rounded-full" : ""}`}
                              src={`/images/${marketName.toLowerCase()}/${asset.image}.svg`}
                              fill
