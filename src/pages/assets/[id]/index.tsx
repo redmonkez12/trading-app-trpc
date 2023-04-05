@@ -14,10 +14,14 @@ export default function Assets() {
   const { id = "", page = "" } = router.query;
 
   const limit = 5;
-  let _page = Number(page) || 0;
-  _page = _page < 0 ? 0 : _page;
+  let _page = Number(page) || 1;
+  _page = _page < 1 ? 1 : _page;
 
-  const { data: assets = [] } = api.assets.getAll.useQuery({ marketId: id as string, offset: ((_page - 1) * limit), limit });
+  const { data: assets = [] } = api.assets.getAll.useQuery({
+    marketId: id as string,
+    offset: ((_page - 1) * limit),
+    limit
+  });
   const { data: count = 0 } = api.assets.count.useQuery();
   const { data: market, isLoading } = api.markets.get.useQuery({ id: id as string });
   const marketName = market?.name || Market.FOREX;
@@ -35,7 +39,7 @@ export default function Assets() {
   async function setPage(page: number) {
     const href = {
       pathname: router.pathname,
-      query: { ...router.query, page },
+      query: { ...router.query, page }
     };
 
     await router.push(href);
@@ -54,32 +58,34 @@ export default function Assets() {
         <Title label={"Assets"} />
 
         <List spacing={"md"}>
-          {assets.map((asset) => {
+          {assets[0] ? assets.map((asset) => {
             const imageColors = parseImageColors(asset.image);
 
             return (
-                <List.Item key={asset.id}
-                           className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white"}>
-                  <Group noWrap>
-                    <div
-                      className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[60px] w-[60px] relative`}
-                      style={{ backgroundColor: imageColors.backgroundColor }}>
-                      {(marketName === Market.COMMODITIES || marketName === Market.STOCKS) ? (
-                        <Image className={`${marketName !== Market.STOCKS ? "rounded-full" : ""}`}
-                               src={`/images/${marketName.toLowerCase()}/${asset.image}.svg`}
-                               fill
-                               alt={"asset image"} />
-                      ) : <DoubleImage ticker={asset.ticker} marketName={marketName} />}
+              <List.Item key={asset.id}
+                         className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white"}>
+                <Group noWrap>
+                  <div
+                    className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[60px] w-[60px] relative`}
+                    style={{ backgroundColor: imageColors.backgroundColor }}>
+                    {(marketName === Market.COMMODITIES || marketName === Market.STOCKS) ? (
+                      <Image className={`${marketName !== Market.STOCKS ? "rounded-full" : ""}`}
+                             src={`/images/${marketName.toLowerCase()}/${asset.image}.svg`}
+                             fill
+                             alt={"asset image"} />
+                    ) : <DoubleImage ticker={asset.ticker} marketName={marketName} />}
 
-                    </div>
-                    <Group noWrap className={"flex-1"}>
-                      <div className={"font-bold"}>{asset.ticker}</div>
-                      <div className={"text-lg"}>{asset.name}</div>
-                    </Group>
+                  </div>
+                  <Group noWrap className={"flex-1"}>
+                    <div className={"font-bold"}>{asset.ticker}</div>
+                    <div className={"text-lg"}>{asset.name}</div>
                   </Group>
-                </List.Item>
+                </Group>
+              </List.Item>
             );
-          })}
+          }) : (
+            <h2 className={"text-4xl md:text-5xl font-bold text-zinc-400 text-center mb-2"}>Sorry, there are no assets</h2>
+          )}
         </List>
 
         <div className={"flex gap-10"}>
