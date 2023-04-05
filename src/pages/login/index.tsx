@@ -15,11 +15,20 @@ export default function Login() {
     }
   }
 
+  async function onDiscordSubmit(e: React.MouseEvent) {
+    e.preventDefault()
+    try {
+      await signIn("discord")
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <Container className={"grid place-items-center p-4"}>
       <Title label={"Portfolio tracker for real traders"} />
 
-      <form className={"mt-8"}>
+      <div className={"flex items-center mt-8 gap-5"}>
         <Button
           className={"relative"}
           type="submit" variant={"outline"}
@@ -31,7 +40,19 @@ export default function Login() {
             <span>Github</span>
           </div>
         </Button>
-      </form>
+
+        <Button
+          className={"relative"}
+          type="submit" variant={"outline"}
+          size={"md"}
+          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+          onClick={onDiscordSubmit}>
+          <div className="flex gap-4 items-center">
+            <Image src={"/images/discord.svg"} alt={"Discord icon"} width={20} height={20} />
+            <span>Discord</span>
+          </div>
+        </Button>
+      </div>
     </Container>
   );
 }
