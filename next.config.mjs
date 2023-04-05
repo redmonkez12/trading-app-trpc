@@ -11,7 +11,7 @@ const config = {
     return [
       {
         source: "/",
-        destination: "/markets",
+        destination: "/login",
         permanent: true
       }
     ];

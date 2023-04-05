@@ -1,26 +1,29 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider } from "@mantine/core";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+                                                       Component,
+                                                       pageProps: { session, ...pageProps }
+                                                     }) => {
   return (
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
       theme={{
         colorScheme: "dark",
-        loader: "bars",
+        loader: "bars"
       }}
     >
-      <SessionProvider session={session}>
+      <SessionProvider
+        session={session}
+        refetchInterval={5 * 60}
+        refetchOnWindowFocus={true}>
         <Component {...pageProps} />
       </SessionProvider>
     </MantineProvider>

@@ -5,6 +5,8 @@ import { List, Group, Button, Stack, Container, Loader } from "@mantine/core";
 import Link from "next/link";
 import { Market } from "@prisma/client";
 import { DoubleImage } from "~/components/DoubleImage/DoubleImage";
+import { Title } from "~/components/Title/Title";
+import { protectAuthRoute } from "~/protectedRoute";
 
 export default function Assets() {
   const router = useRouter();
@@ -31,7 +33,7 @@ export default function Assets() {
   return (
     <Container>
       <Stack className={"p-4"} spacing={"md"}>
-        <h1 className={"text-4xl md:text-5xl font-bold text-white text-center"}>Assets</h1>
+        <Title label={"Assets"} />
 
         <List spacing={"md"}>
           {assets.map((asset) => {
@@ -73,3 +75,5 @@ export default function Assets() {
     </Container>
   );
 }
+
+export const getServerSideProps = protectAuthRoute;
