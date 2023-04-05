@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Market } from "@prisma/client";
+import { type Market } from "@prisma/client";
 
 type Props = {
   ticker: string;

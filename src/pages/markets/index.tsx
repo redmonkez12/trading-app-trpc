@@ -1,5 +1,5 @@
 import { Market } from "@prisma/client";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { Button, Loader } from "@mantine/core";
 
 import { CardWrapper } from "~/components/CardWrapper/CardWrapper";
@@ -8,7 +8,6 @@ import { Title } from "~/components/Title/Title";
 import { protectAuthRoute } from "~/protectedRoute";
 
 export default function MarketsPage() {
-  const { data: session } = useSession();
   const { data: markets = [], isLoading = [] } = api.markets.getAll.useQuery();
 
   function getTitle(market: Market) {
