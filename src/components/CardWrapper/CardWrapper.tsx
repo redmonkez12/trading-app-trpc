@@ -24,9 +24,7 @@ export function CardWrapper({ market, buttonText }: Props) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Stack align={"center"}>
-        <Link href="#">
-          <h5 className="mb-2 text-3xl font-bold tracking-tight text-white capitalize text-center">{market.name}</h5>
-        </Link>
+        <h5 className="mb-2 text-3xl font-bold tracking-tight text-white capitalize text-center">{market.name}</h5>
         <div className={"mt-4 mb-8 h-[70px] w-[70px] relative"}>
           <Image src={`/images/${getImage(market.name)}`} alt={"Image"} fill />
         </div>

@@ -5,6 +5,7 @@
 // import { commoditiesSeed } from "./commoditiesSeed";
 import { cryptoSeed } from "./cryptoSeed";
 import { db } from "../lib/db";
+import { stocksSeed } from "./stocksSeed";
 
 async function main() {
   // const markets = [Market.CRYPTO, Market.FOREX, Market.STOCKS, Market.COMMODITIES];
@@ -18,9 +19,9 @@ async function main() {
   //   });
   // }
 
-  await cryptoSeed();
+  // await cryptoSeed();
   // await commoditiesSeed();
-  // await stocksSeed();
+  await stocksSeed();
   // await forexSeed();
 }
 

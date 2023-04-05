@@ -28,11 +28,12 @@ export default function Login() {
     <Container className={"grid place-items-center p-4"}>
       <Title label={"Portfolio tracker for real traders"} />
 
-      <div className={"flex items-center mt-8 gap-5"}>
+      <div className={"flex md:flex-row flex-col items-center mt-8 gap-5 w-full max-w-xl"}>
         <Button
           className={"relative"}
           type="submit" variant={"outline"}
           size={"md"}
+          fullWidth
           /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
           onClick={onGithubSubmit}>
           <div className="flex gap-4 items-center">
@@ -45,6 +46,7 @@ export default function Login() {
           className={"relative"}
           type="submit" variant={"outline"}
           size={"md"}
+          fullWidth
           /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
           onClick={onDiscordSubmit}>
           <div className="flex gap-4 items-center">
