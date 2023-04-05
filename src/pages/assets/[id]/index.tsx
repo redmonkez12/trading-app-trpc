@@ -1,4 +1,6 @@
-import { List, Group, Button, Stack, Container, Loader, Pagination } from "@mantine/core";
+import React from "react";
+import { useDebounce } from 'use-debounce';
+import { List, Group, Button, Stack, Container, Loader, Pagination, Input } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -10,6 +12,9 @@ import { Title } from "~/components/Title/Title";
 import { protectAuthRoute } from "~/protectedRoute";
 
 export default function Assets() {
+  const [search, setSearch] = React.useState("");
+  const [debouncedSearch] = useDebounce(search, 500);
+
   const router = useRouter();
   const { id = "", page = "" } = router.query;
 
@@ -17,10 +22,11 @@ export default function Assets() {
   let _page = Number(page) || 1;
   _page = _page < 1 ? 1 : _page;
 
-  const { data: assets = [] } = api.assets.getAll.useQuery({
+  const { data: assets = [],  } = api.assets.getAll.useQuery({
     marketId: id as string,
     offset: ((_page - 1) * limit),
-    limit
+    limit,
+    search: debouncedSearch,
   });
   const { data: count = 0 } = api.assets.count.useQuery();
   const { data: market, isLoading } = api.markets.get.useQuery({ id: id as string });
@@ -45,6 +51,10 @@ export default function Assets() {
     await router.push(href);
   }
 
+  function searchAsset(e: React.KeyboardEvent<HTMLInputElement>) {
+    setSearch((e.target as HTMLInputElement).value);
+  }
+
 
   if (isLoading) {
     return <div className={"loader"}>
@@ -57,8 +67,10 @@ export default function Assets() {
       <Stack className={"p-4"} spacing={"md"}>
         <Title label={"Assets"} />
 
+        <Input placeholder="Search for assets" onKeyUp={searchAsset}/>
+
         <List spacing={"md"}>
-          {assets[0] ? assets.map((asset) => {
+          {(!isLoading && assets[0]) ? assets.map((asset) => {
             const imageColors = parseImageColors(asset.image);
 
             return (
