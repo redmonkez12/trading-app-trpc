@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import { Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { api } from "~/utils/api";
 
 const routes = [
   {
@@ -18,13 +19,26 @@ const routes = [
   },
 ];
 
-export function Navigation() {
+export type User = {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  id?: string | null;
+};
+
+type Props = {
+  user: User | null;
+};
+
+export function Navigation({ user }: Props) {
+  const { data: currentUser } = api.users.getAll.useQuery({ userId: user?.id || ""} );
   const router = useRouter();
   const currentRoute = router.pathname;
-  console.log(currentRoute);
 
   return (
     <Stack className={"w-[250px] self-start"}>
+      <h2 className={"font-bold text-white text-center"}>{currentUser?.name || ""}</h2>
+
       {routes.map(route => (
         <NextLink
           key={route.url}

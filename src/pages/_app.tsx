@@ -10,12 +10,6 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { Navigation } from "~/components/Navigation/Navigation";
 
-type User = {
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-};
-
 const MyApp: AppType<{ session: Session | null }> = ({
                                                        Component,
                                                        pageProps: { session, ...pageProps }
@@ -44,7 +38,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         refetchInterval={5 * 60}
         refetchOnWindowFocus={true}>
         <Group className={"p-5"}>
-          {user && <Navigation/>}
+          {user && <Navigation user={user} />}
           <div className={"flex justify-center w-full flex-1"}>
             <Component {...pageProps} />
           </div>
