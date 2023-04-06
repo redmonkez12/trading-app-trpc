@@ -8,7 +8,7 @@ import { MantineProvider, Group } from "@mantine/core";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import { Navigation } from "~/components/Navigation/Navigation";
+import { Navigation, type User } from "~/components/Navigation/Navigation";
 
 const MyApp: AppType<{ session: Session | null }> = ({
                                                        Component,
