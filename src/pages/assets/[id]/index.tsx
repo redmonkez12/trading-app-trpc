@@ -30,6 +30,8 @@ export default function Assets() {
   });
   const { data: count = 0 } = api.assets.count.useQuery();
   const { data: market, isLoading } = api.markets.get.useQuery({ id: id as string });
+
+
   const marketName = market?.name || Market.FOREX;
 
   const pages = Math.ceil(count / (limit || 1));
@@ -63,7 +65,7 @@ export default function Assets() {
   }
 
   return (
-    <Container>
+    <Container className={"w-full"}>
       <Stack className={"p-4"} spacing={"md"}>
         <Title label={"Assets"} />
 

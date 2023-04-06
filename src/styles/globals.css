@@ -25,3 +25,7 @@
     display: grid;
     place-content: center;
 }
+
+.active {
+    background-color: #287bc0;
+}

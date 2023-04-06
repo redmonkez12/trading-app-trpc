@@ -26,5 +26,6 @@ export async function protectRoute(context: never) {
       },
     };
   }
+
   return { props: {} };
 }
