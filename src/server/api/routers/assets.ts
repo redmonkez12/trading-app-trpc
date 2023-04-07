@@ -28,6 +28,20 @@ export const assetsRouter = createTRPCRouter({
       });
     }),
 
+  get: publicProcedure
+    .input(z.object({
+      assetId: z.string().cuid2(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { assetId } = input;
+
+      return await ctx.prisma.assets.findFirst({
+        where: {
+          id: assetId,
+        },
+      });
+    }),
+
   count: publicProcedure
     .input(z.object({
       marketId: z.string().cuid2(),

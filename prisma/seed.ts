@@ -1,30 +1,30 @@
-// import { Market } from "@prisma/client";
-// import { createId } from "@paralleldrive/cuid2";
-// import { forexSeed } from "./forexSeed";
-// import { stocksSeed } from "./stocksSeed";
-// import { commoditiesSeed } from "./commoditiesSeed";
+import { createId } from "@paralleldrive/cuid2";
+import { Market } from "@prisma/client";
+
 import { cryptoSeed } from "./cryptoSeed";
 import { db } from "../lib/db";
 import { stocksSeed } from "./stocksSeed";
+import { commoditiesSeed } from "./commoditiesSeed";
+import { forexSeed } from "./forexSeed";
 
 async function main() {
-  // const markets = [Market.CRYPTO, Market.FOREX, Market.STOCKS, Market.COMMODITIES];
+  const markets = [Market.CRYPTO, Market.FOREX, Market.STOCKS, Market.COMMODITIES];
 
-  // for (const market of markets) {
-  //   await db.markets.create({
-  //     data: {
-  //       id: createId(),
-  //       name: market
-  //     }
-  //   });
-  // }
+  for (const market of markets) {
+    await db.markets.create({
+      data: {
+        id: createId(),
+        name: market
+      }
+    });
+  }
 
   await db.assets.deleteMany();
 
   await cryptoSeed();
-  // await commoditiesSeed();
+  await commoditiesSeed();
   await stocksSeed();
-  // await forexSeed();
+  await forexSeed();
 }
 
 main()

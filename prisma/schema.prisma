@@ -34,13 +34,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Positions     Positions[]
 }
 
 model VerificationToken {
@@ -65,10 +66,24 @@ enum Market {
 }
 
 model Assets {
-  id       String  @id @default(cuid())
-  name     String
-  ticker   String  @unique
-  image    String
-  marketId String
-  market   Markets @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  id        String      @id @default(cuid())
+  name      String
+  ticker    String      @unique
+  image     String
+  marketId  String
+  market    Markets     @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  Positions Positions[]
+}
+
+model Positions {
+  id           String   @id @default(cuid())
+  openPrice    Decimal
+  closePrice   Decimal
+  openTime     DateTime @db.Timestamptz
+  closeTime    DateTime @db.Timestamptz
+  positionSize Decimal
+  userId       String
+  assetId      String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset        Assets   @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }

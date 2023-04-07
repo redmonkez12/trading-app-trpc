@@ -16,20 +16,20 @@ export default function Assets() {
   const [debouncedSearch] = useDebounce(search, 500);
 
   const router = useRouter();
-  const { id = "", page = "" } = router.query;
+  const { marketId = "", page = "" } = router.query;
 
   const limit = 5;
   let _page = Number(page) || 1;
   _page = _page < 1 ? 1 : _page;
 
   const { data: assets = [],  } = api.assets.getAll.useQuery({
-    marketId: id as string,
+    marketId: marketId as string,
     offset: ((_page - 1) * limit),
     limit,
     search: debouncedSearch,
   });
-  const { data: count = 0 } = api.assets.count.useQuery({ marketId: id as string });
-  const { data: market, isLoading } = api.markets.get.useQuery({ id: id as string });
+  const { data: count = 0 } = api.assets.count.useQuery({ marketId: marketId as string });
+  const { data: market, isLoading } = api.markets.get.useQuery({ id: marketId as string });
 
   const marketName = market?.name || Market.FOREX;
 
@@ -69,7 +69,7 @@ export default function Assets() {
         <Title>
           <div className={"flex gap-4 justify-center items-center"}>
             <div className={"capitalize"}>{marketName.toLowerCase()}</div>
-            <div className={"text-xl"}>({count})</div>
+            <div className={"text-xl text-[#339af0]"}>({count})</div>
           </div>
         </Title>
 
@@ -103,7 +103,7 @@ export default function Assets() {
                     className={"ml-auto"}
                     variant={"outline"}
                     component={Link}
-                    href={`/assets/${asset.id}/position`}
+                    href={`/markets/${market?.id || ""}/assets/${asset.id}/position`}
                   >Add position</Button>
                 </Group>
               </List.Item>

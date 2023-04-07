@@ -7,7 +7,7 @@ import { Title } from "~/components/Title/Title";
 import { protectAuthRoute } from "~/protectedRoute";
 
 export default function MarketsPage() {
-  const { data: markets = [], isLoading = [] } = api.markets.getAll.useQuery();
+  const { data: markets = [], isLoading = true } = api.markets.getAll.useQuery();
 
   function getTitle(market: Market) {
     if (market === Market.COMMODITIES) {

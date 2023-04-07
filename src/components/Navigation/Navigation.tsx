@@ -21,6 +21,12 @@ const routes = [
     image: "statistics.svg",
   },
   {
+    url: "/positions",
+    parent: "/positions",
+    label: "Positions",
+    image: "portfolio.svg",
+  },
+  {
     url: "/profile",
     parent: "/profile",
     label: "Profile",
