@@ -1,9 +1,11 @@
+import { useState } from "react";
 import NextLink from "next/link";
 import { Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
+
 import { api } from "~/utils/api";
-import { useState } from "react";
 
 const routes = [
   {
@@ -41,6 +43,14 @@ export function Navigation({ user }: Props) {
     setMenuOpen(!menuOpen);
   }
 
+  async function onLogout() {
+    try {
+      await signOut();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <div className={"flex items-start w-full"}>
       <Image className={"cursor-pointer"} src={"/images/hamburger.svg"} width={50} height={50} alt={"Icon"} onClick={toggleMenu} />
@@ -62,9 +72,17 @@ export function Navigation({ user }: Props) {
           <span className={"w-[20px] h-[20px] relative"}>
             <Image src={`/images/${route.image}`} fill alt={"Icon"} />
           </span>
-            <span>{route.label}</span>
+          <span>{route.label}</span>
           </NextLink>
         ))}
+
+        <NextLink
+          href={"/login"}
+          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+          onClick={onLogout}
+          className={`flex items-center gap-4 bg-[#339af0] text-white p-2`}>
+          Logout
+        </NextLink>
       </Stack>
     </div>
   );
