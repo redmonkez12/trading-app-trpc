@@ -73,7 +73,7 @@ export default function Assets() {
           </div>
         </Title>
 
-        <Input placeholder="Search for assets" onKeyUp={searchAsset}/>
+        <Input className={"mt-8"} placeholder="Search for assets" onKeyUp={searchAsset}/>
 
         <List spacing={"md"}>
           {(!isLoading && assets[0]) ? assets.map((asset) => {
@@ -81,7 +81,7 @@ export default function Assets() {
 
             return (
               <List.Item key={asset.id}
-                         className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white"}>
+                         className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white custom-list-item"}>
                 <Group noWrap>
                   <div
                     className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[40px] md:h-[60px] w-[40px] md:w-[60px] relative`}
@@ -98,6 +98,13 @@ export default function Assets() {
                     <div className={"font-bold"}>{asset.ticker}</div>
                     <div className={"text-lg hidden md:block"}>{asset.name}</div>
                   </Group>
+
+                  <Button
+                    className={"ml-auto"}
+                    variant={"outline"}
+                    component={Link}
+                    href={`/assets/${asset.id}/position`}
+                  >Add position</Button>
                 </Group>
               </List.Item>
             );

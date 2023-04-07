@@ -29,3 +29,7 @@
 .active {
     background-color: #287bc0;
 }
+
+.custom-list-item > div {
+    width: 100%;
+}
