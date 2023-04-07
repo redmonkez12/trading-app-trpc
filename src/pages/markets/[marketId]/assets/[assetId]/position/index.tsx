@@ -80,6 +80,7 @@ export default function AddPosition() {
           </div>
         </Title>
 
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <form className={"flex flex-col gap-4 max-w-[400px] w-full my-8"} onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             label="Open time"
