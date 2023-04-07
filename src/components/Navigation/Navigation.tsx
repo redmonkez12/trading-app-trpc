@@ -81,7 +81,10 @@ export function Navigation({ user }: Props) {
           /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
           onClick={onLogout}
           className={`flex items-center gap-4 bg-[#339af0] text-white p-2`}>
-          Logout
+           <span className={"w-[20px] h-[20px] relative"}>
+            <Image src={`/images/logout.svg`} fill alt={"Icon"} />
+          </span>
+          <span>Logout </span>
         </NextLink>
       </Stack>
     </div>
