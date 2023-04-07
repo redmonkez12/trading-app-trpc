@@ -5,20 +5,37 @@ import Image from "next/image";
 import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
 
-export default function Login() {
-  async function onGithubSubmit(e: React.MouseEvent) {
-    e.preventDefault()
-    try {
-      await signIn("github")
-    } catch (e) {
-      console.error(e);
-    }
-  }
+type LoginType = "github" | "discord" | "facebook";
 
-  async function onDiscordSubmit(e: React.MouseEvent) {
-    e.preventDefault()
+type Login = {
+  type: LoginType;
+  name: string;
+  icon: string;
+};
+
+const logins: Login[] = [
+  {
+    type: "github",
+    name: "Github",
+    icon: "github.svg"
+  },
+  {
+    type: "discord",
+    name: "Discord",
+    icon: "discord.svg"
+  },
+  {
+    type: "facebook",
+    name: "Facebook",
+    icon: "facebook.svg"
+  }
+];
+
+export default function Login() {
+  async function onLogin(e: React.MouseEvent, type: LoginType) {
+    e.preventDefault();
     try {
-      await signIn("discord")
+      await signIn(type);
     } catch (e) {
       console.error(e);
     }
@@ -28,32 +45,22 @@ export default function Login() {
     <Container className={"grid place-items-center p-4"}>
       <Title label={"Portfolio tracker for real traders"} />
 
-      <div className={"flex md:flex-row flex-col items-center mt-8 gap-5 w-full max-w-xl"}>
-        <Button
-          className={"relative"}
-          type="submit" variant={"outline"}
-          size={"md"}
-          fullWidth
-          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-          onClick={onGithubSubmit}>
-          <div className="flex gap-4 items-center">
-            <Image src={"/images/github.svg"} alt={"Github icon"} width={20} height={20} />
-            <span>Github</span>
-          </div>
-        </Button>
+      <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login page</h2>
 
-        <Button
-          className={"relative"}
-          type="submit" variant={"outline"}
-          size={"md"}
-          fullWidth
-          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-          onClick={onDiscordSubmit}>
-          <div className="flex gap-4 items-center">
-            <Image src={"/images/discord.svg"} alt={"Discord icon"} width={20} height={20} />
-            <span>Discord</span>
-          </div>
-        </Button>
+      <div className={"flex flex-col md:max-w-[300px] items-center gap-5 w-full max-w-xl"}>
+        {logins.map((login) => (
+          <Button
+            key={login.name}
+            className={"relative"}
+            type="submit" variant={"outline"}
+            size={"md"}
+            fullWidth
+            leftIcon={<Image src={`/images/${login.icon}`} alt={`${login.name} icon`} width={25} height={25} />}
+            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+            onClick={(e) => onLogin(e, login.type)}>
+            {login.name}
+          </Button>
+        ))}
       </div>
     </Container>
   );

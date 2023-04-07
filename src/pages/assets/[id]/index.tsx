@@ -66,7 +66,7 @@ export default function Assets() {
 
   return (
     <Container className={"w-full"}>
-      <Stack className={"p-4"} spacing={"md"}>
+      <Stack className={"p-0 md:p-4"} spacing={"md"}>
         <Title label={"Assets"} />
 
         <Input placeholder="Search for assets" onKeyUp={searchAsset}/>
@@ -80,7 +80,7 @@ export default function Assets() {
                          className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white"}>
                 <Group noWrap>
                   <div
-                    className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[60px] w-[60px] relative`}
+                    className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[40px] md:h-[30px] w-[40px] md:w-[60px] relative`}
                     style={{ backgroundColor: imageColors.backgroundColor }}>
                     {(marketName === Market.COMMODITIES || marketName === Market.STOCKS) ? (
                       <Image className={`${marketName !== Market.STOCKS ? "rounded-full" : ""}`}
@@ -92,7 +92,7 @@ export default function Assets() {
                   </div>
                   <Group noWrap className={"flex-1"}>
                     <div className={"font-bold"}>{asset.ticker}</div>
-                    <div className={"text-lg"}>{asset.name}</div>
+                    <div className={"text-lg hidden md:block"}>{asset.name}</div>
                   </Group>
                 </Group>
               </List.Item>
