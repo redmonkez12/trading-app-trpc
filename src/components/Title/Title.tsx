@@ -1,9 +1,11 @@
+import { type ReactNode } from "react";
+
 type Props = {
-  label: string;
+  children: ReactNode;
 };
 
-export function Title({ label }: Props) {
+export function Title({ children }: Props) {
   return (
-    <h1 className={"text-4xl md:text-5xl font-bold text-white text-center"}>{label}</h1>
+    <h1 className={"text-4xl md:text-5xl font-bold text-white text-center"}>{children}</h1>
   );
 }

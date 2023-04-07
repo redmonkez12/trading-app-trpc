@@ -11,9 +11,15 @@ export async function cryptoSeed() {
 
   const assets = [
     {
-      name: "Bitcoin / TetherUS",
-      ticker: "BTC/USDT",
-      image: "bitcoin-usdt",
+      name: "Bitcoin",
+      ticker: "BTC",
+      image: "btc.png",
+      marketId: crypto.id,
+    },
+    {
+      name: "Ethereum",
+      ticker: "ETH",
+      image: "eth.png",
       marketId: crypto.id,
     },
   ];

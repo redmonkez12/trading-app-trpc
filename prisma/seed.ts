@@ -19,7 +19,9 @@ async function main() {
   //   });
   // }
 
-  // await cryptoSeed();
+  await db.assets.deleteMany();
+
+  await cryptoSeed();
   // await commoditiesSeed();
   await stocksSeed();
   // await forexSeed();

@@ -14,7 +14,7 @@ export const assetsRouter = createTRPCRouter({
 
       return await ctx.prisma.assets.findMany({
         where: {
-          marketId: marketId,
+          marketId,
           name: {
             contains: search,
             mode: "insensitive",
@@ -26,7 +26,16 @@ export const assetsRouter = createTRPCRouter({
     }),
 
   count: publicProcedure
-    .query(async ({ ctx }) => {
-      return await ctx.prisma.assets.count();
+    .input(z.object({
+      marketId: z.string().cuid2(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { marketId } = input;
+
+      return await ctx.prisma.assets.count({
+        where: {
+          marketId,
+        },
+      });
     }),
 });

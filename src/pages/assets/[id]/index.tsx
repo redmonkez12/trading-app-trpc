@@ -28,9 +28,8 @@ export default function Assets() {
     limit,
     search: debouncedSearch,
   });
-  const { data: count = 0 } = api.assets.count.useQuery();
+  const { data: count = 0 } = api.assets.count.useQuery({ marketId: id as string });
   const { data: market, isLoading } = api.markets.get.useQuery({ id: id as string });
-
 
   const marketName = market?.name || Market.FOREX;
 
@@ -67,7 +66,12 @@ export default function Assets() {
   return (
     <Container className={"w-full"}>
       <Stack className={"p-0 md:p-4"} spacing={"md"}>
-        <Title label={"Assets"} />
+        <Title>
+          <div className={"flex gap-4 justify-center items-center"}>
+            <div className={"capitalize"}>{marketName.toLowerCase()}</div>
+            <div className={"text-xl"}>({count})</div>
+          </div>
+        </Title>
 
         <Input placeholder="Search for assets" onKeyUp={searchAsset}/>
 
@@ -80,11 +84,11 @@ export default function Assets() {
                          className={"flex gap-3 items-center border-solid border p-4 bg-gray-800 border-gray-700 text-white"}>
                 <Group noWrap>
                   <div
-                    className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[40px] md:h-[30px] w-[40px] md:w-[60px] relative`}
+                    className={`${marketName !== Market.STOCKS ? "" : "image-box-shadow"} h-[40px] md:h-[60px] w-[40px] md:w-[60px] relative`}
                     style={{ backgroundColor: imageColors.backgroundColor }}>
-                    {(marketName === Market.COMMODITIES || marketName === Market.STOCKS) ? (
+                    {(marketName !== Market.FOREX) ? (
                       <Image className={`${marketName !== Market.STOCKS ? "rounded-full" : ""}`}
-                             src={`/images/${marketName.toLowerCase()}/${asset.image}.svg`}
+                             src={`/images/${marketName.toLowerCase()}/${asset.image}`}
                              fill
                              alt={"asset image"} />
                     ) : <DoubleImage ticker={asset.ticker} marketName={marketName} />}
