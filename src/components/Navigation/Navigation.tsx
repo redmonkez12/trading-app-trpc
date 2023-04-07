@@ -15,6 +15,12 @@ const routes = [
     image: "market.svg",
   },
   {
+    url: "/statistics",
+    parent: "/statistics",
+    label: "Statistics",
+    image: "statistics.svg",
+  },
+  {
     url: "/profile",
     parent: "/profile",
     label: "Profile",
@@ -52,12 +58,12 @@ export function Navigation({ user }: Props) {
   }
 
   return (
-    <div className={"flex items-start w-full"}>
-      <Image className={"cursor-pointer"} src={"/images/hamburger.svg"} width={50} height={50} alt={"Icon"} onClick={toggleMenu} />
+    <div className={"flex items-start w-full md:w-[320px]"}>
+      <Image className={"cursor-pointer inline md:hidden"} src={"/images/hamburger.svg"} width={50} height={50} alt={"Icon"} onClick={toggleMenu} />
 
       <Stack className={`self-start ${menuOpen ? "" : "hidden"}
-      md:flex absolute bg-[#1A1B1E] md:-relative w-full md:w-[320px]
-      h-screen md:h-auto left-0 top-0 right-0 bottom-0 p-8 z-10`}>
+      md:flex absolute bg-[#1A1B1E] md:relative flex-1 px-8
+      h-screen md:h-auto left-0 top-0 right-0 bottom-0 z-10`}>
         <div className={"flex items-center"}>
           <Image className={"cursor-pointer md:hidden"} src={"/images/cross.svg"} width={30} height={30} alt={"Icon"} onClick={toggleMenu} />
           <h2 className={"font-bold text-white text-center flex-1"}>{currentUser?.name || ""}</h2>
