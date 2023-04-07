@@ -20,6 +20,9 @@ export const assetsRouter = createTRPCRouter({
             mode: "insensitive",
           },
         },
+        orderBy: {
+          ticker: "asc",
+        },
         skip: offset,
         take: limit,
       });

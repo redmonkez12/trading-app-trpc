@@ -114,7 +114,7 @@ export default function Assets() {
           >Back</Button>
 
           {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-          <Pagination value={_page} onChange={setPage} total={pages} />
+          {pages > 1 && <Pagination value={_page} onChange={setPage} total={pages} />}
         </div>
       </Stack>
     </Container>

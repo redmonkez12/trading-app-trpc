@@ -1,6 +1,5 @@
 import { Market } from "@prisma/client";
-import { signOut } from "next-auth/react";
-import { Button, Loader } from "@mantine/core";
+import { Loader } from "@mantine/core";
 
 import { CardWrapper } from "~/components/CardWrapper/CardWrapper";
 import { api } from "~/utils/api";
@@ -32,7 +31,7 @@ export default function MarketsPage() {
 
   return (
     <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
-      <Title>Choose your favorite market</Title>
+      <Title>Choose your market</Title>
 
       <div className={"market-container grid grid-cols-1 gap-6"}>
         {
@@ -44,12 +43,6 @@ export default function MarketsPage() {
           ))
         }
       </div>
-
-      <Button
-        variant={"outline"}
-        /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-        onClick={() => signOut()}
-      >Logout</Button>
     </div>
   );
 }
