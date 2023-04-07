@@ -58,8 +58,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_SECRET,
     }),
     FacebookProvider({
-      clientId: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET
+      clientId: process.env.FACEBOOK_ID as string,
+      clientSecret: process.env.FACEBOOK_SECRET as string,
     })
     /**
      * ...add more providers here.
