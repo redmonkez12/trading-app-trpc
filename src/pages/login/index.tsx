@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
+import { useState } from "react";
 
 type LoginType = "github" | "discord" | "google";
 
@@ -32,18 +33,31 @@ const logins: Login[] = [
 ];
 
 export default function Login() {
+  const [loadingState, setLoadingState] = useState<{ loading: boolean; type?: LoginType }>({
+    loading: false,
+    type: undefined
+  });
+
   async function onLogin(e: React.MouseEvent, type: LoginType) {
     e.preventDefault();
     try {
       await signIn(type);
+      setLoadingState({
+        loading: true,
+        type,
+      });
     } catch (e) {
       console.error(e);
+      setLoadingState({
+        loading: false,
+        type: undefined,
+      });
     }
   }
 
   return (
     <Container className={"grid place-items-center p-4"}>
-      <Title label={"Portfolio tracker for real traders"} />
+      <Title>Portfolio tracker for real traders</Title>
 
       <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login page</h2>
 
@@ -55,6 +69,8 @@ export default function Login() {
             type="submit" variant={"outline"}
             size={"md"}
             fullWidth
+            loading={loadingState.type === login.type}
+            disabled={loadingState.loading}
             leftIcon={<Image src={`/images/${login.icon}`} alt={`${login.name} icon`} width={25} height={25} />}
             /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
             onClick={(e) => onLogin(e, login.type)}>

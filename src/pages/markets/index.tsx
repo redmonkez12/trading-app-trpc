@@ -32,7 +32,7 @@ export default function MarketsPage() {
 
   return (
     <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
-      <Title label={"Choose your favorite market"} />
+      <Title>Choose your favorite market</Title>
 
       <div className={"market-container grid grid-cols-1 gap-6"}>
         {
