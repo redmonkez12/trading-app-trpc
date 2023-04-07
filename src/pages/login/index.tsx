@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
 
-type LoginType = "github" | "discord" | "facebook";
+type LoginType = "github" | "discord" | "google";
 
 type Login = {
   type: LoginType;
@@ -25,9 +25,9 @@ const logins: Login[] = [
     icon: "discord.svg"
   },
   {
-    type: "facebook",
-    name: "Facebook",
-    icon: "facebook.svg"
+    type: "google",
+    name: "Google",
+    icon: "google.svg"
   }
 ];
 
