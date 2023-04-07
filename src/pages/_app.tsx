@@ -37,7 +37,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         session={session}
         refetchInterval={5 * 60}
         refetchOnWindowFocus={true}>
-        <Group className={"p-5"}>
+        <Group className={"p-5 flex-col md:flex-row"}>
           {user && <Navigation user={user} />}
           <div className={"flex justify-center w-full flex-1"}>
             <Component {...pageProps} />
