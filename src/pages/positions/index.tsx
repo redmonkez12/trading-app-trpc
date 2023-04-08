@@ -1,17 +1,15 @@
-import { Container, List } from "@mantine/core";
+import { Container, List, Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { type User } from "~/components/Navigation/Navigation";
 import { getSession } from "next-auth/react";
 import { Title } from "~/components/Title/Title";
-import { type Positions } from ".prisma/client";
+import Image from "next/image";
 
 export default function Positions() {
   const [user, setUser] = useState<User | null>(null);
 
-  const { data: positions } = api.positions.getAll.useQuery({ userId: user?.id || "" });
-
-  console.log(positions);
+  const { data: positions = [] } = api.positions.getAll.useQuery({ userId: user?.id || "" });
 
   useEffect(() => { // use zustand
     void (async () => {
@@ -20,24 +18,47 @@ export default function Positions() {
     })();
   }, []);
 
-  function calculatePl(position: Positions) {
+  const rows = positions.map((position) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return position.positionSize * (position.closePrice - position.openPrice);
-  }
-  
+    const profitLoss = position.positionSize * (position.closePrice - position.openPrice);
+
+    return (
+      <tr key={position.id}>
+        <td>
+          <div className={"flex gap-2 items-center"}>
+            <div className={"text-lg"}>{position.asset.name}</div>
+            <div className={"text-xs text-[#339af0]"}>({position.asset.ticker})</div>
+          </div>
+        </td>
+        <td>
+          <div className={"flex gap-2 items-center"}>
+            <div>{profitLoss} USD</div>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
+            <div className={"text-xs text-[#339af0]"}>({profitLoss / (position.openPrice * position.positionSize) * 100}%)</div>
+          </div>
+        </td>
+        <td><Image src={`/images/${profitLoss > 0 ? "profit" : "loss"}.svg`} width={30} height={30}
+                   alt={"icon"} /></td>
+      </tr>
+    );
+  });
+
   return (
     <Container className={"w-full"}>
       <Title>Your positions</Title>
 
-      <List spacing={"md"}>
-        {positions?.map(position => (
-          <List.Item key={position.id}>
-            <div>{position.asset.name}</div>
-            <div>P/L {calculatePl(position)}</div>
-          </List.Item>
-        ))}
-      </List>
+      <Table className={"mt-8"}>
+        <thead>
+        <tr>
+          <th>Asset</th>
+          <th>P/L</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
     </Container>
   );
 }
