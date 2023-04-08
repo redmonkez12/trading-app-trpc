@@ -13,7 +13,7 @@ export async function commoditiesSeed() {
     {
       name: "Gold Spot / U.S. Dollar",
       ticker: "XAU/USD",
-      image: "gold",
+      image: "gold.svg",
       marketId: forex.id,
     },
   ];

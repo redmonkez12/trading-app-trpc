@@ -1,5 +1,10 @@
+import { BarChart } from "~/components/BarChart/BarChart";
+import { Container } from "@mantine/core";
+
 export default function Statistics() {
   return (
-    <div>Statistics</div>
+    <Container className={"w-full"}>
+      <BarChart/>
+    </Container>
   );
 }

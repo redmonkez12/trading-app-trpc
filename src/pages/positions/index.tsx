@@ -1,4 +1,4 @@
-import { Container, List, Table } from "@mantine/core";
+import { Container, Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { type User } from "~/components/Navigation/Navigation";
@@ -36,7 +36,9 @@ export default function Positions() {
             <div>{profitLoss} USD</div>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
-            <div className={"text-xs text-[#339af0]"}>({profitLoss / (position.openPrice * position.positionSize) * 100}%)</div>
+            <div
+              className={"text-xs text-[#339af0]"}>({(profitLoss / (position.openPrice * position.positionSize) * 100).toFixed(2)}%)
+            </div>
           </div>
         </td>
         <td><Image src={`/images/${profitLoss > 0 ? "profit" : "loss"}.svg`} width={30} height={30}

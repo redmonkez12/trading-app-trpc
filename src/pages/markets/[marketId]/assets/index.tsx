@@ -73,7 +73,7 @@ export default function Assets() {
           </div>
         </Title>
 
-        <Input className={"mt-8"} placeholder="Search for assets" onKeyUp={searchAsset}/>
+        <Input className={"mt-8"} placeholder="Search for assets" disabled={assets.length <= 1} onKeyUp={searchAsset}/>
 
         <List spacing={"md"}>
           {(!isLoading && assets[0]) ? assets.map((asset) => {
