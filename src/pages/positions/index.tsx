@@ -34,9 +34,9 @@ export default function Positions() {
         <td>
           <div className={"flex gap-2 items-center"}>
             <div>{profitLoss} USD</div>
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
             <div
+              /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+              /* @ts-ignore */
               className={"text-xs text-[#339af0]"}>({(profitLoss / (position.openPrice * position.positionSize) * 100).toFixed(2)}%)
             </div>
           </div>
