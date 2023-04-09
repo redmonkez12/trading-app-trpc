@@ -35,24 +35,27 @@ export function BarChart() {
           labels: data.map(row => row.month),
           datasets: [
             {
-              label: "Positive",
-              data: data.map(row => row.count).filter(value => value > 0),
-              backgroundColor: "#1db954",
-            },
-            {
-              label: "Negative",
-              data: data.map(row => row.count).filter(value => value < 0),
-              backgroundColor: "#e90052",
+              label: "Profit/Loss",
+              data: data.map(row => row.count),
+              backgroundColor: data.map(row => row.count >= 0 ? "#1db954" : "#e90052"),
             },
           ],
         },
-      }
+        options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      },
     );
     chartId.current = chart.id;
   }, []);
 
   return (
     <div>
+      <h2 className={"text-4xl md:text-5xl font-bold text-zinc-400 text-center mb-2"}>Profit/Loss</h2>
       <canvas ref={chartRef}></canvas>
     </div>
   );
