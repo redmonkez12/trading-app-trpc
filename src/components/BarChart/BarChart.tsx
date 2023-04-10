@@ -1,25 +1,44 @@
 import { useEffect, useRef } from "react";
 import { Chart } from "chart.js/auto";
+import { type PerMonth } from "~/server/api/routers/statistics";
 
-export function BarChart() {
+type Props = {
+  byMonth: PerMonth[];
+};
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export function BarChart({ byMonth }: Props) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartId = useRef<string | null>(null);
 
   useEffect(() => {
-    const data = [
-      { month: "January", count: 1000 },
-      { month: "February", count: -2000 },
-      { month: "March", count: 5000 },
-      { month: "April", count: 0 },
-      { month: "May", count: 0 },
-      { month: "June", count: 0 },
-      { month: "July", count: 0 },
-      { month: "August", count: 0 },
-      { month: "September", count: 0 },
-      { month: "October", count: 0 },
-      { month: "November", count: 0 },
-      { month: "December", count: 0 },
-    ];
+    if (byMonth.length === 0) {
+      return;
+    }
+
+    const data = Array.from({ length: 12 }, (_, index) => {
+      const found = byMonth.find(({ month }) => month == index + 1);
+      return {
+        profitLoss: found ? found.profitLoss : 0,
+        month: months[index],
+      };
+    });
+
+    console.log(data);
 
     if (chartId.current !== null) {
       return;
@@ -36,10 +55,10 @@ export function BarChart() {
           datasets: [
             {
               label: "Profit/Loss",
-              data: data.map(row => row.count),
-              backgroundColor: data.map(row => row.count >= 0 ? "#1db954" : "#e90052"),
-            },
-          ],
+              data: data.map(row => row.profitLoss),
+              backgroundColor: data.map(row => row.profitLoss >= 0 ? "#1db954" : "#e90052")
+            }
+          ]
         },
         options: {
           plugins: {
@@ -48,10 +67,10 @@ export function BarChart() {
             }
           }
         }
-      },
+      }
     );
     chartId.current = chart.id;
-  }, []);
+  }, [byMonth.length]);
 
   return (
     <div>
