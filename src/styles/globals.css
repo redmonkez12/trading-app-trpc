@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body, #__next {
+    height: 100vh;
+}
+
 .market-container {
     grid-template-columns: repeat(1, minmax(0, 384px));
 }
@@ -27,9 +31,13 @@
 }
 
 .active {
-    background-color: #287bc0;
+    color: #287bc0;
 }
 
 .custom-list-item > div {
     width: 100%;
+}
+
+.shadow-all-sides {
+    box-shadow: 0 0 5px #fff;
 }

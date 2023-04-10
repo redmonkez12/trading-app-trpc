@@ -13,18 +13,12 @@ export const statisticsRouter = createTRPCRouter({
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.$queryRaw<PerMonth[]>(sql`
-SELECT
-EXTRACT(MONTH FROM date_trunc('month', "public"."Positions"."closeTime")::date) AS month,
-SUM(("public"."Positions"."closePrice" - "public"."Positions"."openPrice") * "public"."Positions"."positionSize") AS "profitLoss"
-FROM "public"."Positions"
-WHERE "public"."Positions"."userId" = ${input.userId}
-GROUP BY month`);
-
-      // return await ctx.prisma.positions.groupBy({
-      //   by: ['date_trunc("month", closeTime)'],
-      //   where: {
-      //     userId: input.userId,
-      //   },
-      // });
+        SELECT
+        EXTRACT(MONTH FROM date_trunc('month', p."closeTime")::date) AS month,
+        SUM((p."closePrice" - p."openPrice") * p."positionSize") AS "profitLoss"
+        FROM "public"."Positions" AS p
+        WHERE p."userId" = ${input.userId}
+        GROUP BY month
+      `);
     })
 });

@@ -2,7 +2,7 @@ import { BarChart } from "~/components/BarChart/BarChart";
 import { Container } from "@mantine/core";
 import { api } from "~/utils/api";
 import { useEffect, useState } from "react";
-import { User } from "~/components/Navigation/Navigation";
+import { type User } from "~/components/Navigation/Navigation";
 import { getSession } from "next-auth/react";
 
 export default function Statistics() {
