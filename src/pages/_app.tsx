@@ -40,7 +40,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         refetchInterval={5 * 60}
         refetchOnWindowFocus={true}>
         <Alert icon={<Image src={"/images/danger.svg"} width={20} height={20} alt={"danger"}/>} color="red">
-          This application is under development, please don't use it for real data.
+          This application is under development, please don&apos;t use it for real data.
         </Alert>
 
         <Group align={"flex-start"} className={"p-8 flex-col md:flex-row h-full"}>
