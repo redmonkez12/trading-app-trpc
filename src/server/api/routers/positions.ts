@@ -7,15 +7,16 @@ export const positionRouter = createTRPCRouter({
     .input(z.object({
       openPrice: z.number(),
       closePrice: z.number(),
+      fee: z.number(),
       openTime: z.date(),
       closeTime: z.date(),
       userId: z.string().cuid(),
       assetId: z.string().cuid2(),
       positionSize: z.number(),
-      positionType: z.enum([PositionType.LONG, PositionType.SHORT]),
+      positionType: z.enum([PositionType.LONG, PositionType.SHORT])
     }))
     .mutation(async ({ ctx, input }) => {
-      const { openTime, closeTime, closePrice, openPrice, userId, assetId, positionSize, positionType } = input;
+      const { openTime, closeTime, closePrice, openPrice, userId, assetId, positionSize, positionType, fee } = input;
 
       return await ctx.prisma.positions.create({
         data: {
@@ -25,9 +26,10 @@ export const positionRouter = createTRPCRouter({
           closePrice,
           positionSize,
           positionType,
+          fee,
           closeTime: openTime.toISOString(),
-          openTime: closeTime.toISOString(),
-        },
+          openTime: closeTime.toISOString()
+        }
       });
     }),
 
@@ -36,15 +38,15 @@ export const positionRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.positions.findMany({
         where: {
-          userId: input.userId,
+          userId: input.userId
         },
         include: {
           asset: {
             include: {
-              market: true,
+              market: true
             }
-          },
-        },
+          }
+        }
       });
-    }),
+    })
 });

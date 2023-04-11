@@ -19,6 +19,7 @@ export async function cryptoSeed() {
         ticker: asset.ticker,
         marketId: cryptoMarket.id,
         image: asset.image,
+        pipFactor: 1,
       },
     });
   }

@@ -39,6 +39,9 @@ export const assetsRouter = createTRPCRouter({
         where: {
           id: assetId,
         },
+        include: {
+          market: true,
+        },
       });
     }),
 

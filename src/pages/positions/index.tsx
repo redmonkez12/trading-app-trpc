@@ -23,14 +23,17 @@ export default function Positions() {
     })();
   }, []);
 
+  console.log(positions);
+
   const rows = positions.map((position) => {
-    const profitLoss = position.positionType === PositionType.LONG
+    let profitLoss = position.positionType === PositionType.LONG
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       ? position.positionSize * (position.closePrice - position.openPrice)
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       : position.positionSize * (position.openPrice - position.closePrice);
+    profitLoss = profitLoss - (position.fee || 0);
 
     return (
       <tr key={position.id}>
@@ -51,7 +54,7 @@ export default function Positions() {
         </td>
         { /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        <td>{position.asset.market.name === "FOREX" ? position.positionSize / 100000 : position.positionSize.toString()}</td>
+        <td>{position.asset.market.name === "FOREX" ? `${position.positionSize / 100000} lot(s)` : `${position.positionSize.toString()} unit(s)`}</td>
         {position.positionType === PositionType.LONG && <th style={{color: "#1db954"}}>LONG</th>}
         {position.positionType === PositionType.SHORT && <th style={{color: "#e90052"}}>SHORT</th>}
         <td><Image src={`/images/${profitLoss > 0 ? "profit" : "loss"}.svg`} width={30}

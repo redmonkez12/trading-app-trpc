@@ -26,6 +26,7 @@ export async function commoditiesSeed() {
         ticker: asset.ticker,
         marketId: asset.marketId,
         image: asset.image,
+        pipFactor: 1,
       },
     });
   }

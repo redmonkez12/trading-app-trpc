@@ -18,6 +18,7 @@ export async function stocksSeed() {
         ticker: asset.ticker,
         marketId: stocks.id,
         image: asset.image,
+        pipFactor: 1,
       },
     });
   }

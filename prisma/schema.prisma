@@ -90,6 +90,7 @@ model Positions {
   positionSize Decimal
   userId       String
   assetId      String
+  fee          Float        @default(0)
   positionType PositionType
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   asset        Assets       @relation(fields: [assetId], references: [id], onDelete: Cascade)
