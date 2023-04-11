@@ -17,14 +17,22 @@ const MyApp: AppType<{ session: Session | null }> = ({
                                                        pageProps: { session, ...pageProps }
                                                      }) => {
   const [user, setUser] = useState<User | null>(null);
-
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
+    const showAlert = !sessionStorage.getItem("alert");
+    setShowAlert(showAlert);
+
     void (async () => {
-       const session = await getSession();
-       setUser(session?.user || null);
+      const session = await getSession();
+      setUser(session?.user || null);
     })();
   }, []);
+
+  function closeAlert() {
+    setShowAlert(false);
+    sessionStorage.setItem("alert", "show");
+  }
 
   return (
     <MantineProvider
@@ -39,9 +47,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         session={session}
         refetchInterval={5 * 60}
         refetchOnWindowFocus={true}>
-        <Alert icon={<Image src={"/images/danger.svg"} width={20} height={20} alt={"danger"}/>} color="red">
+        {showAlert && <Alert
+          icon={<Image src={"/images/danger.svg"}
+                       width={20} height={20}
+                       alt={"danger"} />}
+          color="red"
+          withCloseButton
+          onClose={closeAlert}>
           This application is under development, please don&apos;t use it for real data.
-        </Alert>
+        </Alert>}
 
         <Group align={"flex-start"} className={"p-8 flex-col md:flex-row h-full"}>
           {user && <NavigationNew user={user} />}
