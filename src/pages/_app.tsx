@@ -17,7 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                                                        pageProps: { session, ...pageProps }
                                                      }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(true);
 
   useEffect(() => {
     const showAlert = !sessionStorage.getItem("alert");
@@ -57,9 +57,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           This application is under development, please don&apos;t use it for real data.
         </Alert>}
 
-        <Group align={"flex-start"} className={"p-8 flex-col md:flex-row h-full"}>
+        <Group align={"flex-start"} className={"p-8 flex-col md:flex-row h-full w-full"}>
           {user && <NavigationNew user={user} />}
-          <div className={"flex justify-center w-full flex-1"}>
+          <div className={"flex justify-center w-full flex-1 h-full"}>
             <Component {...pageProps} />
           </div>
         </Group>

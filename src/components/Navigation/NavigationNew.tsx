@@ -1,7 +1,6 @@
 import { Stack } from "@mantine/core";
 import Image from "next/image";
 import NextLink from "next/link";
-import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signOut } from "next-auth/react";

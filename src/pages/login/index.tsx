@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button, Container } from "@mantine/core";
+import { Button, Container, Stack } from "@mantine/core";
 import Image from "next/image";
 
 import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
-import { useState } from "react";
+import { TopNav } from "~/components/TopNav/TopNav";
 
 type LoginType = "github" | "discord" | "google";
 
@@ -44,41 +45,45 @@ export default function Login() {
       await signIn(type);
       setLoadingState({
         loading: true,
-        type,
+        type
       });
     } catch (e) {
       console.error(e);
       setLoadingState({
         loading: false,
-        type: undefined,
+        type: undefined
       });
     }
   }
 
   return (
-    <Container className={"grid place-items-center p-4"}>
-      <Title>Portfolio tracker for real traders</Title>
+    <Stack className={"w-full"}>
+      <TopNav/>
 
-      <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login page</h2>
+      <Container className={"grid place-items-center p-4"}>
+        <Title>Portfolio tracker for real traders</Title>
 
-      <div className={"flex flex-col md:max-w-[300px] items-center gap-5 w-full max-w-xl"}>
-        {logins.map((login) => (
-          <Button
-            key={login.name}
-            className={"relative"}
-            type="submit" variant={"outline"}
-            size={"md"}
-            fullWidth
-            loading={loadingState.type === login.type}
-            disabled={loadingState.loading}
-            leftIcon={<Image src={`/images/${login.icon}`} alt={`${login.name} icon`} width={25} height={25} />}
-            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-            onClick={(e) => onLogin(e, login.type)}>
-            {login.name}
-          </Button>
-        ))}
-      </div>
-    </Container>
+        <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login page</h2>
+
+        <div className={"flex flex-col md:max-w-[300px] items-center gap-5 w-full max-w-xl"}>
+          {logins.map((login) => (
+            <Button
+              key={login.name}
+              className={"relative"}
+              type="submit" variant={"outline"}
+              size={"md"}
+              fullWidth
+              loading={loadingState.type === login.type}
+              disabled={loadingState.loading}
+              leftIcon={<Image src={`/images/${login.icon}`} alt={`${login.name} icon`} width={25} height={25} />}
+              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+              onClick={(e) => onLogin(e, login.type)}>
+              {login.name}
+            </Button>
+          ))}
+        </div>
+      </Container>
+    </Stack>
   );
 }
 
