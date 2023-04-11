@@ -17,7 +17,7 @@ export function TopNav() {
                alt={"Icon"} onClick={toggleMenu} />
 
         {menuOpen ? null : (
-          <div className={"flex items-center gap-4 flex-1 justify-end"}>
+          <div className={"flex items-center gap-4 flex-1 justify-end md:hidden"}>
             <NextLink href={"/login"}>Log in</NextLink>
 
             <Button
@@ -50,7 +50,7 @@ export function TopNav() {
             <NextLink href={"#"}>Blog</NextLink>
           </div>
 
-          <div className={"hidden md:flex items-center gap-4"}>
+          <div className={"hidden md:flex items-center gap-4 md:order-2"}>
             <NextLink href={"/login"}>Log in</NextLink>
             <Button
               variant={"outline"}
