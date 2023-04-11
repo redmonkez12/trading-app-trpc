@@ -60,10 +60,8 @@ export default function Login() {
     <Stack className={"w-full"}>
       <TopNav/>
 
-      <Container className={"grid place-items-center p-4"}>
-        <Title>Portfolio tracker for real traders</Title>
-
-        <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login page</h2>
+      <Container className={"grid place-items-center p-4 min-w-full"}>
+        <h2 className={"text-3xl md:text-4xl font-bold text-white text-center my-8"}>Login</h2>
 
         <div className={"flex flex-col md:max-w-[300px] items-center gap-5 w-full max-w-xl"}>
           {logins.map((login) => (

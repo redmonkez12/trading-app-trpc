@@ -11,6 +11,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { type User } from "~/components/Navigation/Navigation";
 import { NavigationNew } from "~/components/Navigation/NavigationNew";
+import { protectRoute } from "~/protectedRoute";
 
 const MyApp: AppType<{ session: Session | null }> = ({
                                                        Component,
@@ -57,7 +58,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           This application is under development, please don&apos;t use it for real data.
         </Alert>}
 
-        <Group align={"flex-start"} className={"p-8 flex-col md:flex-row h-full w-full"}>
+        <Group align={"flex-start"} className={"p-4 md:p-8 flex-col md:flex-row h-full w-full"}>
           {user && <NavigationNew user={user} />}
           <div className={"flex justify-center w-full flex-1 h-full"}>
             <Component {...pageProps} />

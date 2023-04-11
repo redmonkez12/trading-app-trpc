@@ -63,7 +63,7 @@ export function NavigationNew({ user }: Props) {
   }
 
   return (
-    <div className={"h-full"}>
+    <div className={"md:h-full"}>
       <Image className={"cursor-pointer inline md:hidden"} src={"/images/hamburger.svg"} width={50} height={50}
              alt={"Icon"} onClick={toggleMenu} />
 
@@ -88,7 +88,7 @@ export function NavigationNew({ user }: Props) {
             </div>
 
             <div className={"mt-10"}>
-              <div>John Doe</div>
+              <div>{user?.name || ""}</div>
             </div>
           </div>
 

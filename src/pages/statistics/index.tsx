@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import { type User } from "~/components/Navigation/Navigation";
 import { getSession } from "next-auth/react";
+import { protectAuthRoute } from "~/protectedRoute";
 
 export default function Statistics() {
   const [user, setUser] = useState<User | null>(null);
@@ -23,3 +24,5 @@ export default function Statistics() {
     </Container>
   );
 }
+
+export const getServerSideProps = protectAuthRoute;

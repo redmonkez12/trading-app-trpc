@@ -1,10 +1,10 @@
 import { createId } from "@paralleldrive/cuid2";
 import { Market } from "@prisma/client";
 
-import { cryptoSeed } from "./cryptoSeed";
+// import { cryptoSeed } from "./cryptoSeed";
 import { db } from "../lib/db";
-import { stocksSeed } from "./stocksSeed";
-import { commoditiesSeed } from "./commoditiesSeed";
+// import { stocksSeed } from "./stocksSeed";
+// import { commoditiesSeed } from "./commoditiesSeed";
 import { forexSeed } from "./forexSeed";
 
 async function main() {
@@ -21,9 +21,9 @@ async function main() {
 
   await db.assets.deleteMany();
 
-  await cryptoSeed();
-  await commoditiesSeed();
-  await stocksSeed();
+  // await cryptoSeed();
+  // await commoditiesSeed();
+  // await stocksSeed();
   await forexSeed();
 }
 

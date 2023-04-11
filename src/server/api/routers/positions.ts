@@ -1,5 +1,6 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
+import { PositionType } from ".prisma/client";
 
 export const positionRouter = createTRPCRouter({
   create: publicProcedure
@@ -11,9 +12,10 @@ export const positionRouter = createTRPCRouter({
       userId: z.string().cuid(),
       assetId: z.string().cuid2(),
       positionSize: z.number(),
+      positionType: z.enum([PositionType.LONG, PositionType.SHORT]),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { openTime, closeTime, closePrice, openPrice, userId, assetId, positionSize } = input;
+      const { openTime, closeTime, closePrice, openPrice, userId, assetId, positionSize, positionType } = input;
 
       return await ctx.prisma.positions.create({
         data: {
@@ -22,6 +24,7 @@ export const positionRouter = createTRPCRouter({
           openPrice,
           closePrice,
           positionSize,
+          positionType,
           closeTime: openTime.toISOString(),
           openTime: closeTime.toISOString(),
         },
@@ -36,8 +39,12 @@ export const positionRouter = createTRPCRouter({
           userId: input.userId,
         },
         include: {
-          asset: true,
+          asset: {
+            include: {
+              market: true,
+            }
+          },
         },
       });
-    })
+    }),
 });

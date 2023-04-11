@@ -5,8 +5,8 @@ import { createId } from "@paralleldrive/cuid2";
 export async function forexSeed() {
   const forex = await db.markets.findFirstOrThrow({
     where: {
-      name: Market.FOREX,
-    },
+      name: Market.FOREX
+    }
   });
 
   const assets = [
@@ -14,8 +14,20 @@ export async function forexSeed() {
       name: "Euro / U.S. Dollar",
       ticker: "EUR/USD",
       image: "eur-usd",
-      marketId: forex.id,
+      pipFactor: 10000,
     },
+    {
+      name: "Australian Dollar / U.S. Dollar",
+      ticker: "AUD/USD",
+      image: "aud-usd",
+      pipFactor: 10000,
+    },
+    {
+      name: "British Pound / U.S. Dollar",
+      ticker: "GBP/USD",
+      image: "gbp-usd",
+      pipFactor: 10000,
+    }
   ];
 
   for (const asset of assets) {
@@ -24,9 +36,10 @@ export async function forexSeed() {
         id: createId(),
         name: asset.name,
         ticker: asset.ticker,
-        marketId: asset.marketId,
+        marketId: forex.id,
         image: asset.image,
-      },
+        pipFactor: asset.pipFactor,
+      }
     });
   }
 }
