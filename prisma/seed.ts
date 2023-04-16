@@ -6,21 +6,23 @@ import { db } from "../lib/db";
 import { stocksSeed } from "./stocksSeed";
 import { commoditiesSeed } from "./commoditiesSeed";
 import { forexSeed } from "./forexSeed";
+import { indicesSeed } from "./indicesSeed";
 
 async function main() {
-  const markets = [Market.CRYPTO, Market.FOREX, Market.STOCKS, Market.COMMODITIES];
+  // const markets = [Market.INDICES];
+  // for (const market of markets) {
+  //   await db.markets.create({
+  //     data: {
+  //       id: createId(),
+  //       name: market
+  //     }
+  //   });
+  // }
 
   await db.assets.deleteMany();
 
-  for (const market of markets) {
-    await db.markets.create({
-      data: {
-        id: createId(),
-        name: market
-      }
-    });
-  }
 
+  await indicesSeed();
   await cryptoSeed();
   await commoditiesSeed();
   await stocksSeed();

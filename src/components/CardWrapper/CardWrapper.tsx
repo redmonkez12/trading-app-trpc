@@ -16,6 +16,8 @@ export function CardWrapper({ market, buttonText }: Props) {
       return "bitcoin.svg";
     } else if (market === Market.FOREX) {
       return "forex.svg";
+    } else if (market === Market.INDICES) {
+      return "indices.svg";
     }
 
     return "stock.svg";

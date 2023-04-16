@@ -18,6 +18,8 @@ export default function MarketsPage() {
       return "Go to forex";
     } else if (market === Market.STOCKS) {
       return "Go to stocks";
+    } else if (market === Market.INDICES) {
+      return "Go to indices";
     }
     
     return "Unknown text";

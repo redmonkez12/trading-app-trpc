@@ -88,8 +88,7 @@ export function Navigation({ user }: Props) {
             </div>
 
             <div className={"mt-10"}>
-              {/*<div>{user?.name || ""}</div>*/}
-              <div>John DOe</div>
+              <div>{user?.name || ""}</div>
             </div>
           </div>
 
