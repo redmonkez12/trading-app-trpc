@@ -9,6 +9,7 @@ import { getSession } from "next-auth/react";
 import { Title } from "~/components/Title/Title";
 import { Button, Container, NumberInput, Select, Stack, TextInput } from "@mantine/core";
 import Link from "next/link";
+import { DateTimePicker } from "@mantine/dates";
 
 type FormValues = {
   openTime: string;
@@ -32,27 +33,29 @@ export function CreatePosition({ marketId, asset }: Props) {
 
   const form = useForm<FormValues>({
     initialValues: {
-      openTime: "2023-06-04T20:20:20",
-      closeTime: "2023-06-04T21:20:20",
-      openPrice: 1.09102,
-      closePrice: 1.09312,
+      openTime: "",
+      closeTime: "",
+      openPrice: 0,
+      closePrice: 0,
       type: "LONG",
       fee: 0,
-      units: 1
+      units: 0,
     },
 
     validate: {
       openTime: isNotEmpty("Open time is required"),
-      closeTime: isNotEmpty("Close time is required"),
-      units: isNotEmpty("Position size is required"),
+      closeTime: (value, values) => (
+        value <= values.openTime ? "Close time should be after open time" : null
+      ),
+      units: (value) => (value <= 0 ? "Position size should be higher than zero" : null),
       fee: isNotEmpty("Position size is required"),
       type: isNotEmpty("Position type is required"),
-      openPrice: (value) => (value < 0 ? "Open price should be higher than zero" : null),
-      closePrice: (value) => (value < 0 ? "Close price should be higher than zero" : null)
-    }
+      openPrice: (value) => (value <= 0 ? "Open price should be higher than zero" : null),
+      closePrice: (value) => (value <= 0 ? "Close price should be higher than zero" : null)
+    },
   });
 
-  const { mutate: createPosition } = api.positions.create.useMutation();
+  const { mutate: createPosition, isLoading } = api.positions.create.useMutation();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => { // use zustand
@@ -103,14 +106,14 @@ export function CreatePosition({ marketId, asset }: Props) {
 
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <form className={"flex flex-col gap-4 max-w-[400px] w-full my-8"} onSubmit={form.onSubmit(submitForm)}>
-          <TextInput
+          <DateTimePicker
+            withSeconds
             label="Open time"
-            placeholder="YYYY-MM-DDTHH:MM:SS"
             {...form.getInputProps("openTime")}
           />
-          <TextInput
+          <DateTimePicker
+            withSeconds
             label="Close time"
-            placeholder="YYYY-MM-DDTHH:MM:SS"
             {...form.getInputProps("closeTime")}
           />
           <NumberInput
@@ -150,7 +153,7 @@ export function CreatePosition({ marketId, asset }: Props) {
               variant={"outline"}
               type={"submit"}
               fullWidth
-              disabled={!form.isValid}
+              disabled={!form.isValid || isLoading}
             >Submit</Button>
 
             <Button

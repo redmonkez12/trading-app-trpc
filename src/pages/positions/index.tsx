@@ -1,4 +1,4 @@
-import { Button, Container, Menu, Table } from "@mantine/core";
+import { Button, Container, Group, Menu, Modal, Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { type User } from "~/components/Navigation/Navigation";
@@ -12,9 +12,12 @@ import { Market } from "@prisma/client";
 
 export default function Positions() {
   const [user, setUser] = useState<User | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [markedPosition, setMarkedPosition] = useState("");
 
+  const { mutate: deletePositionMutation } = api.positions.delete.useMutation();
   const { data: markets = [] } = api.markets.getAll.useQuery();
-  const { data: positions = [] } = api.positions.getAll.useQuery({ userId: user?.id || "" });
+  const { data: positions = [], refetch: refetchPositions } = api.positions.getAll.useQuery({ userId: user?.id || "" });
 
   useEffect(() => { // use zustand
     void (async () => {
@@ -23,7 +26,26 @@ export default function Positions() {
     })();
   }, []);
 
-  console.log(positions);
+  function closeModal() {
+    setOpenModal(false);
+    setMarkedPosition("");
+  }
+
+  function onPositionDelete(id: string) {
+    setMarkedPosition(id);
+    setOpenModal(true);
+  }
+
+  function deletePosition() {
+    deletePositionMutation({ positionId: markedPosition }, {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSettled: async () => {
+        await refetchPositions();
+      }
+    });
+    setMarkedPosition("");
+    setOpenModal(false);
+  }
 
   const rows = positions.map((position) => {
     let profitLoss = position.positionType === PositionType.LONG
@@ -55,14 +77,26 @@ export default function Positions() {
         { /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <td>{position.asset.market.name === "FOREX" ? `${position.positionSize / 100000} lot(s)` : `${position.positionSize.toString()} unit(s)`}</td>
-        {position.positionType === PositionType.LONG && <th style={{color: "#1db954"}}>LONG</th>}
-        {position.positionType === PositionType.SHORT && <th style={{color: "#e90052"}}>SHORT</th>}
-        <td><Image src={`/images/${profitLoss > 0 ? "profit" : "loss"}.svg`} width={30}
+        {position.positionType === PositionType.LONG && <th style={{ color: "#1db954" }}>LONG</th>}
+        {position.positionType === PositionType.SHORT && <th style={{ color: "#e90052" }}>SHORT</th>}
+        <td>
+          <Group className={"justify-end"}>
+            <Image src={`/images/${profitLoss > 0 ? "profit" : "loss"}.svg`} width={20}
                    height={30}
-                   alt={"icon"} /></td>
+                   alt={"icon"} />
+            <Image className={"cursor-pointer"} src={`/images/cross_red.svg`} width={20}
+                   height={30}
+                   alt={"icon"}
+                   onClick={() => onPositionDelete(position.id)}
+            />
+          </Group>
+        </td>
       </tr>
     );
   });
+
+  console.log(rows, "rows");
+  console.log(positions, "rows");
 
   function getImage(market: string) {
     if (market === Market.COMMODITIES) {
@@ -87,8 +121,13 @@ export default function Positions() {
 
           <Menu.Dropdown>
             {markets.map(market => (
-              <Menu.Item key={market.id} icon={<Image src={`/images/${getImage(market.name)}`} alt={"Crypto"} width={14}
-                                                      height={14} />}>
+              <Menu.Item
+                key={market.id}
+                icon={<Image src={`/images/${getImage(market.name)}`}
+                             alt={"Crypto"}
+                             width={14}
+                             height={14} />}
+              >
                 <NextLink className={"capitalize"}
                           href={`/markets/${market.id}/assets`}>{market.name.toLowerCase()}</NextLink>
               </Menu.Item>
@@ -111,6 +150,26 @@ export default function Positions() {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
+
+      <Modal opened={openModal} onClose={closeModal} title={"Delete position"} centered>
+        Do you really want to delete the position?
+
+        <Group className={"gap-4 mt-4"}>
+          <Button
+            className={"flex-1"}
+            color={"red"}
+            variant={"outline"}
+            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+            onClick={deletePosition}
+          >Delete</Button>
+
+          <Button
+            className={"flex-1"}
+            variant={"outline"}
+            onClick={closeModal}
+          >Cancel</Button>
+        </Group>
+      </Modal>
     </Container>
   );
 }

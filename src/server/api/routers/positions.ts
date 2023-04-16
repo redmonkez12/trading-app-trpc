@@ -48,5 +48,15 @@ export const positionRouter = createTRPCRouter({
           }
         }
       });
+    }),
+
+  delete: publicProcedure
+    .input(z.object({ positionId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.positions.delete({
+        where: {
+          id: input.positionId,
+        },
+      });
     })
 });
