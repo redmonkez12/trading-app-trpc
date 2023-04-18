@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { type User } from "~/components/Navigation/Navigation";
 import { getSession } from "next-auth/react";
 import { Title } from "~/components/Title/Title";
-import { Button, Container, NumberInput, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Container, NumberInput, Select, Stack } from "@mantine/core";
 import Link from "next/link";
 import { DateTimePicker } from "@mantine/dates";
 

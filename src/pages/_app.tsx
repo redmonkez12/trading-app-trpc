@@ -4,7 +4,7 @@ import { type Session } from "next-auth";
 import { getSession, SessionProvider } from "next-auth/react";
 import Image from "next/image";
 
-import { MantineProvider, Group, Alert } from "@mantine/core";
+import { MantineProvider, Group, Alert, ColorScheme, ColorSchemeProvider } from "@mantine/core";
 
 import { api } from "~/utils/api";
 
@@ -18,6 +18,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
                                                      }) => {
   const [user, setUser] = useState<User | null>(null);
   const [showAlert, setShowAlert] = useState(true);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   useEffect(() => {
     const showAlert = !sessionStorage.getItem("alert");
@@ -35,36 +38,41 @@ const MyApp: AppType<{ session: Session | null }> = ({
   }
 
   return (
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={{
-        colorScheme: "dark",
-        loader: "bars"
-      }}
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
     >
-      <SessionProvider
-        session={session}
-        refetchInterval={5 * 60}
-        refetchOnWindowFocus={true}>
-        {showAlert && <Alert
-          icon={<Image src={"/images/danger.svg"}
-                       width={20} height={20}
-                       alt={"danger"} />}
-          color="red"
-          withCloseButton
-          onClose={closeAlert}>
-          This application is under development, please don&apos;t use it for real data.
-        </Alert>}
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme,
+          loader: "bars"
+        }}
+      >
+        <SessionProvider
+          session={session}
+          refetchInterval={5 * 60}
+          refetchOnWindowFocus={true}>
+          {showAlert && <Alert
+            icon={<Image src={"/images/danger.svg"}
+                         width={20} height={20}
+                         alt={"danger"} />}
+            color="red"
+            withCloseButton
+            onClose={closeAlert}>
+            This application is under development, please don&apos;t use it for real data.
+          </Alert>}
 
-        <Group align={"flex-start"} className={"p-4 md:p-8 flex-col md:flex-row h-full w-full"}>
-          {user && <Navigation user={user} />}
-          <div className={"flex justify-center w-full flex-1 h-full"}>
-            <Component {...pageProps} />
-          </div>
-        </Group>
-      </SessionProvider>
-    </MantineProvider>
+          <Group align={"flex-start"} className={"p-4 md:p-8 flex-col md:flex-row h-full w-full"}>
+            {user && <Navigation user={user} />}
+            <div className={"flex justify-center w-full flex-1 h-full"}>
+              <Component {...pageProps} />
+            </div>
+          </Group>
+        </SessionProvider>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 };
 

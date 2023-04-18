@@ -38,15 +38,15 @@ export const positionRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.positions.findMany({
         where: {
-          userId: input.userId
+          userId: input.userId,
         },
         include: {
           asset: {
             include: {
-              market: true
-            }
-          }
-        }
+              market: true,
+            },
+          },
+        },
       });
     }),
 
