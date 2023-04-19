@@ -2,6 +2,7 @@ import { Group, Button } from "@mantine/core";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useState } from "react";
+import { Gains } from "~/components/Gains/Gains";
 
 export function TopNav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,8 +39,8 @@ export function TopNav() {
 
         <Button component={NextLink} href={"/"}>
           <div className={"flex items-center gap-3"}>
-            <Image src={"/images/gains.svg"} height={30} width={30} alt={"Icon"} />
-            <h2 className={"text-xl font-bold text-zinc-400"}>Tradewatch</h2>
+            <Gains/>
+            <h2 className={"text-xl font-bold"}>Tradewatch</h2>
           </div>
         </Button>
 
