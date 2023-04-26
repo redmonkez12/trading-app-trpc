@@ -8,13 +8,15 @@ export const assetsRouter = createTRPCRouter({
       offset: z.number(),
       limit: z.number(),
       search: z.string(),
+      countryId: z.string().optional(),
     }))
     .query(async ({ input, ctx }) => {
-      const { marketId, offset, limit, search } = input;
+      const { marketId, offset, limit, search, countryId } = input;
 
       return await ctx.prisma.assets.findMany({
         where: {
           marketId,
+          countryId,
           name: {
             contains: search,
             mode: "insensitive",

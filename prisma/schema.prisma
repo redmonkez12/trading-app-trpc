@@ -71,6 +71,17 @@ enum PositionType {
   SHORT
 }
 
+enum CountryType {
+  USA
+  GERMANY
+}
+
+model Countries {
+  id     String      @id @default(uuid())
+  name   CountryType
+  Assets Assets[]
+}
+
 model Assets {
   id        String      @id @default(cuid())
   name      String
@@ -78,6 +89,8 @@ model Assets {
   image     String
   marketId  String
   market    Markets     @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  countryId String?
+  country   Countries?  @relation(fields: [countryId], references: [id], onDelete: Cascade)
   pipFactor Int
   Positions Positions[]
 }
