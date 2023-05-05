@@ -41,7 +41,8 @@ export default function Login() {
   async function onLogin(e: React.MouseEvent, type: LoginType) {
     e.preventDefault();
     try {
-      await signIn(type);
+      const result = await signIn(type);
+      console.log(result);
       setLoadingState({
         loading: true,
         type

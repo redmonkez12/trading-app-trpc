@@ -4,7 +4,7 @@ import { type Session } from "next-auth";
 import { getSession, SessionProvider } from "next-auth/react";
 import Image from "next/image";
 
-import { MantineProvider, Group, Alert, ColorScheme, ColorSchemeProvider } from "@mantine/core";
+import { MantineProvider, Group, Alert, type ColorScheme, ColorSchemeProvider } from "@mantine/core";
 
 import { api } from "~/utils/api";
 
