@@ -115,7 +115,7 @@ export function Navigation({ user }: Props) {
             ))}
 
             <NavLink
-              label={"logout"}
+              label={"Logout"}
               /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
               onClick={onLogout}
               className={`flex items-center gap-4 p-2`}>

@@ -3,7 +3,6 @@ import { signIn } from "next-auth/react";
 import { Button, Container, Stack } from "@mantine/core";
 import Image from "next/image";
 
-import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
 import { TopNav } from "~/components/TopNav/TopNav";
 
