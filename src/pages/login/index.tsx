@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { protectRoute } from "~/protectedRoute";
 import { TopNav } from "~/components/TopNav/TopNav";
+import { withAuthLayout } from "~/layouts/AuthLayout";
 
 type LoginType = "github" | "discord" | "google";
 
@@ -32,7 +33,7 @@ const logins: Login[] = [
   }
 ];
 
-export default function Login() {
+function Login() {
   const [loadingState, setLoadingState] = useState<{ loading: boolean; type?: LoginType }>({
     loading: false,
     type: undefined
@@ -41,8 +42,7 @@ export default function Login() {
   async function onLogin(e: React.MouseEvent, type: LoginType) {
     e.preventDefault();
     try {
-      const result = await signIn(type);
-      console.log(result);
+      await signIn(type, { redirect: false });
       setLoadingState({
         loading: true,
         type
@@ -84,5 +84,7 @@ export default function Login() {
     </Stack>
   );
 }
+
+export default withAuthLayout(Login);
 
 export const getServerSideProps = protectRoute;

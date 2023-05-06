@@ -1,8 +1,9 @@
 import { protectAuthRoute } from "~/protectedRoute";
 import { Container, Switch, Title, useMantineColorScheme, Button, Modal, Text, Group } from "@mantine/core";
 import { useState } from "react";
+import { withLayout } from "~/layouts/Layout";
 
-export default function Profile() {
+function Profile() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [openAddMoneyModal, setOpenAddMoneyModal] = useState(false);
@@ -42,5 +43,7 @@ export default function Profile() {
     </>
   );
 }
+
+export default withLayout(Profile);
 
 export const getServerSideProps = protectAuthRoute;

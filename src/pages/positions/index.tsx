@@ -9,8 +9,9 @@ import { protectAuthRoute } from "~/protectedRoute";
 import { PositionType } from ".prisma/client";
 import NextLink from "next/link";
 import { Market } from "@prisma/client";
+import { withLayout } from "~/layouts/Layout";
 
-export default function Positions() {
+function Positions() {
   const [user, setUser] = useState<User | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [markedPosition, setMarkedPosition] = useState("");
@@ -95,9 +96,6 @@ export default function Positions() {
     );
   });
 
-  console.log(rows, "rows");
-  console.log(positions, "rows");
-
   function getImage(market: string) {
     if (market === Market.COMMODITIES) {
       return "oil.svg";
@@ -173,5 +171,7 @@ export default function Positions() {
     </Container>
   );
 }
+
+export default withLayout(Positions);
 
 export const getServerSideProps = protectAuthRoute;

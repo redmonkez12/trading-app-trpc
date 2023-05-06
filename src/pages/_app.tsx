@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
-import { getSession, SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import Image from "next/image";
 
-import { MantineProvider, Group, Alert, type ColorScheme, ColorSchemeProvider } from "@mantine/core";
+import { MantineProvider, Alert, type ColorScheme, ColorSchemeProvider } from "@mantine/core";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import { type User } from "~/components/Navigation/Navigation";
-import { Navigation } from "~/components/Navigation/Navigation";
 
 const MyApp: AppType<{ session: Session | null }> = ({
                                                        Component,
                                                        pageProps: { session, ...pageProps }
                                                      }) => {
-  const [user, setUser] = useState<User | null>(null);
   const [showAlert, setShowAlert] = useState(true);
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -25,11 +22,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
   useEffect(() => {
     const showAlert = !sessionStorage.getItem("alert");
     setShowAlert(showAlert);
-
-    void (async () => {
-      const session = await getSession();
-      setUser(session?.user || null);
-    })();
   }, []);
 
   function closeAlert() {
@@ -64,12 +56,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             This application is under development, please don&apos;t use it for real data.
           </Alert>}
 
-          <Group align={"flex-start"} className={"p-4 md:p-8 flex-col md:flex-row h-full w-full"}>
-            {user && <Navigation user={user} />}
-            <div className={"flex justify-center w-full flex-1 h-full"}>
-              <Component {...pageProps} />
-            </div>
-          </Group>
+            <Component {...pageProps} />
         </SessionProvider>
       </MantineProvider>
     </ColorSchemeProvider>

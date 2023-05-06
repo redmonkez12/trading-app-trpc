@@ -5,8 +5,9 @@ import { CreateForexPosition } from "~/forms/CreateForexPosition/CreateForexPosi
 import { protectAuthRoute } from "~/protectedRoute";
 import { api } from "~/utils/api";
 import { CreatePosition } from "~/forms/CreatePosition/CreatePosition";
+import { withLayout } from "~/layouts/Layout";
 
-export default function AddPosition() {
+function AddPosition() {
   const router = useRouter();
   const { marketId = "", assetId = "" } = router.query;
   const { data: asset = null } = api.assets.get.useQuery({ assetId: assetId as string });
@@ -17,5 +18,7 @@ export default function AddPosition() {
       : <CreatePosition marketId={marketId as string} asset={asset}/>
   );
 }
+
+export default withLayout(AddPosition);
 
 export const getServerSideProps = protectAuthRoute;

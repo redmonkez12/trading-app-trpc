@@ -5,8 +5,9 @@ import { CardWrapper } from "~/components/CardWrapper/CardWrapper";
 import { api } from "~/utils/api";
 import { Title } from "~/components/Title/Title";
 import { protectAuthRoute } from "~/protectedRoute";
+import { withLayout } from "~/layouts/Layout";
 
-export default function MarketsPage() {
+function MarketsPage() {
   const { data: markets = [], isLoading = true } = api.markets.getAll.useQuery();
 
   function getTitle(market: Market) {
@@ -32,21 +33,23 @@ export default function MarketsPage() {
   }
 
   return (
-    <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
-      <Title>Choose your market</Title>
+      <div className={"flex flex-col gap-5 items-center m-5 font-light text-gray-500"}>
+        <Title>Choose your market</Title>
 
-      <div className={"market-container grid grid-cols-1 gap-6"}>
-        {
-          markets.map((market) => (
-            <CardWrapper key={market.id}
-                         buttonText={getTitle(market.name)}
-                         market={market}
-            />
-          ))
-        }
+        <div className={"market-container grid grid-cols-1 gap-6"}>
+          {
+            markets.map((market) => (
+              <CardWrapper key={market.id}
+                           buttonText={getTitle(market.name)}
+                           market={market}
+              />
+            ))
+          }
+        </div>
       </div>
-    </div>
   );
 }
+
+export default withLayout(MarketsPage);
 
 export const getServerSideProps = protectAuthRoute;

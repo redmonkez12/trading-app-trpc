@@ -10,8 +10,9 @@ import { api } from "~/utils/api";
 import { DoubleImage } from "~/components/DoubleImage/DoubleImage";
 import { Title } from "~/components/Title/Title";
 import { protectAuthRoute } from "~/protectedRoute";
+import { withLayout } from "~/layouts/Layout";
 
-export default function Assets() {
+function Assets() {
   const [search, setSearch] = React.useState("");
   const [country, setCountry] = React.useState<string | null>(null);
   const [debouncedSearch] = useDebounce(search, 500);
@@ -135,5 +136,7 @@ export default function Assets() {
     </Container>
   );
 }
+
+export default withLayout(Assets);
 
 export const getServerSideProps = protectAuthRoute;

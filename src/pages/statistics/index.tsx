@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { type User } from "~/components/Navigation/Navigation";
 import { getSession } from "next-auth/react";
 import { protectAuthRoute } from "~/protectedRoute";
+import { withLayout } from "~/layouts/Layout";
 
-export default function Statistics() {
+function Statistics() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => { // use zustand
@@ -24,5 +25,7 @@ export default function Statistics() {
     </Container>
   );
 }
+
+export default withLayout(Statistics);
 
 export const getServerSideProps = protectAuthRoute;

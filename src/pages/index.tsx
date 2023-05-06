@@ -3,8 +3,9 @@ import Image from "next/image";
 import { TopNav } from "~/components/TopNav/TopNav";
 import { Title } from "~/components/Title/Title";
 import { protectRoute } from "~/protectedRoute";
+import { withAuthLayout } from "~/layouts/AuthLayout";
 
-export default function Home() {
+function Home() {
 
   return (
     <Stack className={"w-full"}>
@@ -22,5 +23,7 @@ export default function Home() {
     </Stack>
   );
 }
+
+export default withAuthLayout(Home);
 
 export const getServerSideProps = protectRoute;
