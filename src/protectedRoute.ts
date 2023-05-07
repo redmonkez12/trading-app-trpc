@@ -15,10 +15,9 @@ export async function protectAuthRoute(context: GetServerSidePropsContext) {
   }
 
   const { id: userId } = session.user;
-  const userSettings = await prisma.userSettings.findFirst({ where: { userId }})
-  if (!userSettings) {
-    const currentPath = context.resolvedUrl;
-
+  const userAccount = await prisma.userAccount.findFirst({ where: { userId }})
+  const currentPath = context.resolvedUrl;
+  if (!userAccount) {
     if (currentPath.includes("create-account")) {
       return { props: {} };
     }
@@ -26,6 +25,13 @@ export async function protectAuthRoute(context: GetServerSidePropsContext) {
     return {
       redirect: {
         destination: "/create-account",
+        permanent: false
+      }
+    };
+  } else if (currentPath.includes("create-account")) {
+    return {
+      redirect: {
+        destination: "/markets",
         permanent: false,
       },
     };
@@ -40,10 +46,10 @@ export async function protectRoute(context: GetServerSidePropsContext) {
   const session = await getSession(context);
   if (session) {
     const { id: userId } = session.user;
-    const userSettings = await prisma.userSettings.findFirst({ where: { userId }})
+    const userAccount = await prisma.userAccount.findFirst({ where: { userId }})
     const currentPath = context.resolvedUrl;
 
-    if (!userSettings) {
+    if (!userAccount) {
       if (currentPath.includes("create-account")) {
         return { props: {} };
       }

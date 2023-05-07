@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { Gains } from "~/components/Gains/Gains";
+import { UserAccount } from "@prisma/client";
 
 const routes = [
   {
@@ -43,10 +44,11 @@ export type User = {
 
 type Props = {
   user: User | null;
+  userAccount: UserAccount | null;
 };
 
 
-export function Navigation({ user }: Props) {
+export function Navigation({ user, userAccount }: Props) {
   const router = useRouter();
   const currentRoute = router.pathname;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -88,14 +90,14 @@ export function Navigation({ user }: Props) {
           <div className={"flex flex-col font-bold items-center relative"}>
             <Badge className="shadow-all-sides absolute bottom-[3.125rem]" color={"dark"} variant={"filled"}>
               <div className={"flex py-6"}>
+                <div className={"text-xs"}>{userAccount?.money?.toString() || 0}</div>
                 <Image className={"rounded-full mr-1"} src={"/images/dollar.svg"} height={12} width={12}
                        alt={"Dollar"} />
-                <div className={"text-xs"}>2000</div>
               </div>
             </Badge>
 
             <div className={"mt-10"}>
-              <div>John Doe</div>
+              <div>{user?.name || ""}</div>
             </div>
           </div>
 

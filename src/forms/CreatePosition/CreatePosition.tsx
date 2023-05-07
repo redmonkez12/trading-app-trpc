@@ -72,7 +72,7 @@ export function CreatePosition({ marketId, asset }: Props) {
 
       createPosition({
         assetId: asset?.id || "",
-        userId: user?.id || "",
+        accountId: "",
         openPrice: values.openPrice,
         closePrice: values.closePrice,
         positionType: values.type,

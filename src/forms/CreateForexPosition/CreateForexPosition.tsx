@@ -55,14 +55,6 @@ export function CreateForexPosition({ marketId, asset }: Props) {
   });
 
   const { mutate: createPosition } = api.positions.create.useMutation();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => { // use zustand
-    void (async () => {
-      const session = await getSession();
-      setUser(session?.user || null);
-    })();
-  }, []);
 
   async function submitForm(values: FormValues) {
     try {
@@ -71,7 +63,7 @@ export function CreateForexPosition({ marketId, asset }: Props) {
 
       createPosition({
         assetId: asset?.id || "",
-        userId: user?.id || "",
+        accountId: "",
         openPrice: values.openPrice,
         closePrice: values.closePrice,
         positionType: values.type,
@@ -85,8 +77,6 @@ export function CreateForexPosition({ marketId, asset }: Props) {
       console.error(e);
     }
   }
-
-  // const profit = Math.round((form.values.closePrice - form.values.openPrice) * 10000) * 10;
 
   return (
     <Container className={"w-full"}>

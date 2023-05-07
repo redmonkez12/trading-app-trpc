@@ -10,17 +10,17 @@ export const positionRouter = createTRPCRouter({
       fee: z.number(),
       openTime: z.date(),
       closeTime: z.date(),
-      userId: z.string().cuid(),
+      accountId: z.string().cuid(),
       assetId: z.string().cuid2(),
       positionSize: z.number(),
       positionType: z.enum([PositionType.LONG, PositionType.SHORT])
     }))
     .mutation(async ({ ctx, input }) => {
-      const { openTime, closeTime, closePrice, openPrice, userId, assetId, positionSize, positionType, fee } = input;
+      const { openTime, closeTime, closePrice, openPrice, accountId, assetId, positionSize, positionType, fee } = input;
 
       return await ctx.prisma.positions.create({
         data: {
-          userId,
+          accountId,
           assetId,
           openPrice,
           closePrice,
@@ -34,11 +34,11 @@ export const positionRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure
-    .input(z.object({ userId: z.string() }))
+    .input(z.object({ accountId: z.string() }))
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.positions.findMany({
         where: {
-          userId: input.userId,
+          accountId: input.accountId,
         },
         include: {
           asset: {
