@@ -14,20 +14,47 @@ export async function forexSeed() {
       name: "Euro / U.S. Dollar",
       ticker: "EUR/USD",
       image: "eur-usd",
-      pipFactor: 10000,
     },
     {
       name: "Australian Dollar / U.S. Dollar",
       ticker: "AUD/USD",
       image: "aud-usd",
-      pipFactor: 10000,
     },
     {
       name: "British Pound / U.S. Dollar",
       ticker: "GBP/USD",
       image: "gbp-usd",
-      pipFactor: 10000,
-    }
+    },
+    {
+      name: "British Pound / Japanese Yen",
+      ticker: "GBP/JPY",
+      image: "gbp-jpy",
+    },
+    {
+      name: "U.S. Dollar / Swiss Franc",
+      ticker: "USD/CHF",
+      image: "usd-chf",
+    },
+    {
+      name: "U.S. Dollar / Canadian Dollar",
+      ticker: "USD/CAD",
+      image: "usd-cad",
+    },
+    {
+      name: "Euro / Japanese Yen",
+      ticker: "EUR/JPY",
+      image: "eur-jpy",
+    },
+    {
+      name: "Australian Dollar / Japanese Yen",
+      ticker: "AUD/JPY",
+      image: "aud-jpy",
+    },
+    {
+      name: "New Zealand Dollar / U.S. Dollar",
+      ticker: "NZD/USD",
+      image: "nzd-usd",
+    },
   ];
 
   for (const asset of assets) {
@@ -38,7 +65,7 @@ export async function forexSeed() {
         ticker: asset.ticker,
         marketId: forex.id,
         image: asset.image,
-        pipFactor: asset.pipFactor,
+        pipFactor: 10000,
       }
     });
   }
