@@ -1,8 +1,6 @@
 import { Button, Container, Group, Menu, Modal, Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
-import { type User } from "~/components/Navigation/Navigation";
-import { getSession } from "next-auth/react";
 import { Title } from "~/components/Title/Title";
 import Image from "next/image";
 import { protectAuthRoute } from "~/protectedRoute";
@@ -12,20 +10,12 @@ import { Market } from "@prisma/client";
 import { withLayout } from "~/layouts/Layout";
 
 function Positions() {
-  const [user, setUser] = useState<User | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [markedPosition, setMarkedPosition] = useState("");
 
   const { mutate: deletePositionMutation } = api.positions.delete.useMutation();
   const { data: markets = [] } = api.markets.getAll.useQuery();
-  const { data: positions = [], refetch: refetchPositions } = api.positions.getAll.useQuery({ userId: user?.id || "" });
-
-  useEffect(() => { // use zustand
-    void (async () => {
-      const session = await getSession();
-      setUser(session?.user || null);
-    })();
-  }, []);
+  const { data: positions = [], refetch: refetchPositions } = api.positions.getAll.useQuery({ accountId: "" });
 
   function closeModal() {
     setOpenModal(false);

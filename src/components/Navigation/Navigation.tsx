@@ -31,6 +31,12 @@ const routes = [
     parent: "/profile",
     label: "Profile",
     image: "user"
+  },
+  {
+    url: "/rules",
+    parent: "/rules",
+    label: "Rules",
+    image: "rules"
   }
 ];
 
